@@ -14,6 +14,7 @@
 		33186DFB2C81B4C40037D5E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33186DFA2C81B4C40037D5E0 /* Assets.xcassets */; };
 		33186DFE2C81B4C40037D5E0 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 33186DFD2C81B4C40037D5E0 /* Base */; };
 		33BF73782C87ACD000333EE9 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF73772C87ACD000333EE9 /* ImagesListCell.swift */; };
+		33BF737C2C8855E400333EE9 /* Date + Extensions .swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF737B2C8855E400333EE9 /* Date + Extensions .swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		33186DFD2C81B4C40037D5E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33186DFF2C81B4C40037D5E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33BF73772C87ACD000333EE9 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		33BF737B2C8855E400333EE9 /* Date + Extensions .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extensions .swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		33186DF02C81B4C30037D5E0 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				33BF737A2C88558D00333EE9 /* Helpers */,
 				33BF73792C87AD1F00333EE9 /* ImagesList */,
 				33186DF12C81B4C30037D5E0 /* AppDelegate.swift */,
 				33186DF32C81B4C30037D5E0 /* SceneDelegate.swift */,
@@ -76,6 +79,14 @@
 				33BF73772C87ACD000333EE9 /* ImagesListCell.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		33BF737A2C88558D00333EE9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				33BF737B2C8855E400333EE9 /* Date + Extensions .swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33186DF62C81B4C30037D5E0 /* ImagesListViewController.swift in Sources */,
+				33BF737C2C8855E400333EE9 /* Date + Extensions .swift in Sources */,
 				33BF73782C87ACD000333EE9 /* ImagesListCell.swift in Sources */,
 				33186DF22C81B4C30037D5E0 /* AppDelegate.swift in Sources */,
 				33186DF42C81B4C30037D5E0 /* SceneDelegate.swift in Sources */,

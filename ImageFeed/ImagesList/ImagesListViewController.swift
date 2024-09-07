@@ -11,12 +11,8 @@ class ImagesListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 200
-        
     }
     
-    private func configCell(for cell: ImagesListCell) {
-        
-    }
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -40,4 +36,8 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+}
+
+extension ImagesListViewController {
+    private func configCell(for cell: ImagesListCell) { }
 }
