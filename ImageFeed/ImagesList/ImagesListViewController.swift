@@ -2,8 +2,10 @@ import UIKit
 
 final class ImagesListViewController: UIViewController {
     
+    // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
-    
+
+    // MARK: - Private Properties
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -15,6 +17,7 @@ final class ImagesListViewController: UIViewController {
     private let currentDate = Date()
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
