@@ -5,11 +5,15 @@ protocol AuthViewControllerDelegate: AnyObject {
 }
 
 final class AuthViewController: UIViewController {
+    // MARK: - Public Properties
     weak var delegate: AuthViewControllerDelegate?
     
+    // MARK: - Private Properties
     private let showWebViewSegueIdentifier = "ShowWebView"
-//    private let oauth2Service = OAuth2Service.shared
+    private let oAuth2Service = OAuth2Service.shared
+    private let storage = OAuth2TokenStorage()
 
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
@@ -27,6 +31,7 @@ final class AuthViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_web_back_button")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_web_back_button")
@@ -36,19 +41,19 @@ final class AuthViewController: UIViewController {
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
+    // MARK: - Public Methods
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         //TODO: process code
 
         delegate?.authViewController(self, didAuthenticateWithCode: code)
 //        vc.dismiss(animated: true)
-        
+
         navigationController?.popToRootViewController(animated: true)
 
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
 //        vc.dismiss(animated: true)
-
         navigationController?.popToRootViewController(animated: true)
     }
 }

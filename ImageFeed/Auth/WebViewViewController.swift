@@ -95,7 +95,7 @@ extension WebViewViewController: WKNavigationDelegate {
     ) {
         print("It's LIT", navigationAction.request.url)
 
-        if let code = code(from: navigationAction) {
+        if let code = fetchCode(from: navigationAction) {
             decisionHandler(.cancel)
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
         } else {
@@ -103,7 +103,7 @@ extension WebViewViewController: WKNavigationDelegate {
         }
     }
     
-    private func code(from navigationAction: WKNavigationAction) -> String? {
+    private func fetchCode(from navigationAction: WKNavigationAction) -> String? {
         if
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),

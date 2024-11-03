@@ -22,6 +22,9 @@
 		33E153232CA584FB00016AD6 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E153222CA584FB00016AD6 /* AuthViewController.swift */; };
 		33E153252CA5A3DE00016AD6 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E153242CA5A3DE00016AD6 /* WebViewViewController.swift */; };
 		33E153272CAD782F00016AD6 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E153262CAD782F00016AD6 /* OAuth2Service.swift */; };
+		33E1532B2CBD8D9A00016AD6 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532A2CBD8D9A00016AD6 /* URLSession+data.swift */; };
+		33E1532D2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */; };
+		33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 		33E153222CA584FB00016AD6 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		33E153242CA5A3DE00016AD6 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		33E153262CAD782F00016AD6 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		33E1532A2CBD8D9A00016AD6 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
+		33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
+		33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,7 @@
 		33186DF02C81B4C30037D5E0 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				33E153302CCFE12500016AD6 /* Models */,
 				33E153212CA584E600016AD6 /* Auth */,
 				33BF737A2C88558D00333EE9 /* Helpers */,
 				333634E02C9054A10020A641 /* Profile */,
@@ -110,6 +117,7 @@
 			children = (
 				33BF737B2C8855E400333EE9 /* Date + Extensions .swift */,
 				33E1531F2CA4648200016AD6 /* Constants.swift */,
+				33E1532A2CBD8D9A00016AD6 /* URLSession+data.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -128,8 +136,17 @@
 				33E153222CA584FB00016AD6 /* AuthViewController.swift */,
 				33E153242CA5A3DE00016AD6 /* WebViewViewController.swift */,
 				33E153262CAD782F00016AD6 /* OAuth2Service.swift */,
+				33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		33E153302CCFE12500016AD6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,9 +226,12 @@
 				33186DF62C81B4C30037D5E0 /* ImagesListViewController.swift in Sources */,
 				33BF737C2C8855E400333EE9 /* Date + Extensions .swift in Sources */,
 				33E153272CAD782F00016AD6 /* OAuth2Service.swift in Sources */,
+				33E1532D2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift in Sources */,
+				33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */,
 				33C8E15D2C957AD0007A86C5 /* SingleImageViewController.swift in Sources */,
 				33BF73782C87ACD000333EE9 /* ImagesListCell.swift in Sources */,
 				33186DF22C81B4C30037D5E0 /* AppDelegate.swift in Sources */,
+				33E1532B2CBD8D9A00016AD6 /* URLSession+data.swift in Sources */,
 				33186DF42C81B4C30037D5E0 /* SceneDelegate.swift in Sources */,
 				33E153232CA584FB00016AD6 /* AuthViewController.swift in Sources */,
 				33E153202CA4648200016AD6 /* Constants.swift in Sources */,
