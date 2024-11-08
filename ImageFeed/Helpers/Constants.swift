@@ -13,4 +13,8 @@ enum Constants {
     static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
     static let grant_type = "authorization_code"
+    static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    static let tabBarViewController = "TabBarViewController"
+    static let showWebViewSegueIdentifier = "ShowWebView"
+
 }

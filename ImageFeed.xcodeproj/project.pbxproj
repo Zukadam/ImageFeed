@@ -25,6 +25,7 @@
 		33E1532B2CBD8D9A00016AD6 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532A2CBD8D9A00016AD6 /* URLSession+data.swift */; };
 		33E1532D2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */; };
 		33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */; };
+		33E153332CDB610900016AD6 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E153322CDB610900016AD6 /* SplashViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		33E1532A2CBD8D9A00016AD6 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
 		33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
+		33E153322CDB610900016AD6 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		33186DF02C81B4C30037D5E0 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				33E153312CDB60F200016AD6 /* SplashViewController */,
 				33E153302CCFE12500016AD6 /* Models */,
 				33E153212CA584E600016AD6 /* Auth */,
 				33BF737A2C88558D00333EE9 /* Helpers */,
@@ -147,6 +150,14 @@
 				33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		33E153312CDB60F200016AD6 /* SplashViewController */ = {
+			isa = PBXGroup;
+			children = (
+				33E153322CDB610900016AD6 /* SplashViewController.swift */,
+			);
+			path = SplashViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +241,7 @@
 				33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */,
 				33C8E15D2C957AD0007A86C5 /* SingleImageViewController.swift in Sources */,
 				33BF73782C87ACD000333EE9 /* ImagesListCell.swift in Sources */,
+				33E153332CDB610900016AD6 /* SplashViewController.swift in Sources */,
 				33186DF22C81B4C30037D5E0 /* AppDelegate.swift in Sources */,
 				33E1532B2CBD8D9A00016AD6 /* URLSession+data.swift in Sources */,
 				33186DF42C81B4C30037D5E0 /* SceneDelegate.swift in Sources */,

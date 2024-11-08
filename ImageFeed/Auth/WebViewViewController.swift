@@ -7,11 +7,14 @@ protocol WebViewViewControllerDelegate: AnyObject {
 }
 
 final class WebViewViewController: UIViewController {
+    // MARK: - IB Outlets
     @IBOutlet private var webView: WKWebView!
     @IBOutlet var progressView: UIProgressView!
     
+    // MARK: - Public Properties
     weak var delegate: WebViewViewControllerDelegate?
-    
+
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -41,7 +44,8 @@ final class WebViewViewController: UIViewController {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-
+    
+    // MARK: - Private Methods
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
@@ -93,8 +97,6 @@ extension WebViewViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
-        print("It's LIT", navigationAction.request.url)
-
         if let code = fetchCode(from: navigationAction) {
             decisionHandler(.cancel)
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)

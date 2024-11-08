@@ -9,7 +9,6 @@ final class AuthViewController: UIViewController {
     weak var delegate: AuthViewControllerDelegate?
     
     // MARK: - Private Properties
-    private let showWebViewSegueIdentifier = "ShowWebView"
     private let oAuth2Service = OAuth2Service.shared
     private let storage = OAuth2TokenStorage()
 
@@ -20,10 +19,10 @@ final class AuthViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard let webViewViewController = segue.destination as? WebViewViewController 
+        if segue.identifier == Constants.showWebViewSegueIdentifier {
+            guard let webViewViewController = segue.destination as? WebViewViewController
             else {
-                fatalError("Failed to prepare for \(showWebViewSegueIdentifier)")
+                fatalError("Failed to prepare for \(Constants.showWebViewSegueIdentifier)")
             }
                 webViewViewController.delegate = self
         } else {
@@ -43,17 +42,10 @@ final class AuthViewController: UIViewController {
 extension AuthViewController: WebViewViewControllerDelegate {
     // MARK: - Public Methods
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        //TODO: process code
-
         delegate?.authViewController(self, didAuthenticateWithCode: code)
-//        vc.dismiss(animated: true)
-
-        navigationController?.popToRootViewController(animated: true)
-
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-//        vc.dismiss(animated: true)
-        navigationController?.popToRootViewController(animated: true)
+        vc.dismiss(animated: true)
     }
 }
