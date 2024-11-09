@@ -9,10 +9,10 @@ struct OAuthTokenResponseBody: Decodable {
     
     // MARK: - Private Properties
     private enum CodingKeys: String, CodingKey {
-        case accessToken = "access_token"
-        case tokenType = "token_type"
+        case accessToken
+        case tokenType
         case scope
-        case createdAt = "created_at"
+        case createdAt
     }
     
     private enum ParseError: Error {

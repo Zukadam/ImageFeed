@@ -11,13 +11,7 @@ final class OAuth2TokenStorage {
     private enum Keys: String {
         case token
     }
-
-    private let storage: UserDefaults
     
-    // MARK: - Initialisers
-    init(storage: UserDefaults = .standard) {
-        self.storage = storage
-    }
-    
-
+    static let shared = OAuth2TokenStorage()
+    private let storage = UserDefaults.standard
 }

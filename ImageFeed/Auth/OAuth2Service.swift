@@ -4,23 +4,23 @@ final class OAuth2Service {
     // MARK: - Public Properties
     var authToken: String? {
         get {
-            OAuth2TokenStorage().token
+            storage.token
         }
         set {
-            OAuth2TokenStorage().token = newValue
+            storage.token = newValue
         }
     }
     
     static let shared = OAuth2Service()
     
     // MARK: - Private Properties
+    private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
-    private let decoder = JSONDecoder()
-    
-    private enum NetworkError: Error {
-        case codeError
-    }
-    
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
     // MARK: - Initialisers
     private init() {}
     
@@ -29,16 +29,16 @@ final class OAuth2Service {
         let request: URLRequest = makeOAuthTokenRequest(code: code)
         
         let task = urlSession.data(for: request) { [weak self] result in
-            guard let self else { preconditionFailure("Fail in fetchOAuthToken(), not found self") }
+            guard let self else { return }
             
             switch result {
             case .success(let data):
                 do {
-                    let OAuthTokenResponseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    print(OAuthTokenResponseBody)
-                    print(OAuthTokenResponseBody.accessToken)
-                    self.authToken = OAuthTokenResponseBody.accessToken
-                    completion(.success(OAuthTokenResponseBody.accessToken))
+                    let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    print(responseBody)
+                    print(responseBody.accessToken)
+                    self.authToken = responseBody.accessToken
+                    completion(.success(responseBody.accessToken))
                 } catch {
                     completion(.failure(error))
                 }
@@ -58,7 +58,7 @@ final class OAuth2Service {
             URLQueryItem(name: "client_secret", value: Constants.secretKey),
             URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
             URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: Constants.grant_type)
+            URLQueryItem(name: "grant_type", value: Constants.grantType)
         ]
         guard let url = urlComponents.url else {
             preconditionFailure("Error OAuth urlComponents.url")

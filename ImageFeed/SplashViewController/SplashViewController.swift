@@ -3,7 +3,7 @@ import UIKit
 final class SplashViewController: UIViewController {
     // MARK: - Private Properties
     private let oauth2Service = OAuth2Service.shared
-    private let storage = OAuth2TokenStorage()
+    private let storage = OAuth2TokenStorage.shared
     
     // MARK: - Overrides Methods
     override func viewWillAppear(_ animated: Bool) {
@@ -15,13 +15,9 @@ final class SplashViewController: UIViewController {
         .lightContent
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let _ = storage.token {
+        if storage.token != nil {
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: Constants.showAuthenticationScreenSegueIdentifier, sender: nil)
@@ -64,17 +60,17 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.fetchOAuthToken(code)
         }
     }
 
     private func fetchOAuthToken(_ code: String) {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
-            guard let _ = self else { return }
+            guard let self else { return }
             switch result {
             case .success:
-                break
+                self.switchToTabBarController()
             case .failure:
                 // TODO [Sprint 11]
                 break

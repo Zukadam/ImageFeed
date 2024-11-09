@@ -7,10 +7,6 @@ protocol AuthViewControllerDelegate: AnyObject {
 final class AuthViewController: UIViewController {
     // MARK: - Public Properties
     weak var delegate: AuthViewControllerDelegate?
-    
-    // MARK: - Private Properties
-    private let oAuth2Service = OAuth2Service.shared
-    private let storage = OAuth2TokenStorage()
 
     // MARK: - Overrides Methods
     override func viewDidLoad() {
@@ -24,7 +20,7 @@ final class AuthViewController: UIViewController {
             else {
                 fatalError("Failed to prepare for \(Constants.showWebViewSegueIdentifier)")
             }
-                webViewViewController.delegate = self
+            webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -39,8 +35,8 @@ final class AuthViewController: UIViewController {
     }
 }
 
+// MARK: - WebViewViewControllerDelegate
 extension AuthViewController: WebViewViewControllerDelegate {
-    // MARK: - Public Methods
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         delegate?.authViewController(self, didAuthenticateWithCode: code)
     }

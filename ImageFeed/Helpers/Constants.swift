@@ -7,12 +7,12 @@ enum Constants {
     static let accessScope = "public+read_user+write_likes"
     static let defaultBaseURL = defaultBaseURLchecker
     static private var defaultBaseURLchecker: URL {
-        guard let url = URL(string: "https://api.unsplash.com") else {preconditionFailure("Unable to construct unsplashUrl")}
+        guard let url = URL(string: "https://api.unsplash.com") else { preconditionFailure("Unable to construct unsplashUrl") }
         return url
     }
     static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
-    static let grant_type = "authorization_code"
+    static let grantType = "authorization_code"
     static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     static let tabBarViewController = "TabBarViewController"
     static let showWebViewSegueIdentifier = "ShowWebView"
