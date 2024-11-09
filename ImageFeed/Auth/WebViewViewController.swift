@@ -13,7 +13,7 @@ final class WebViewViewController: UIViewController {
     
     // MARK: - Public Properties
     weak var delegate: WebViewViewControllerDelegate?
-
+    
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,25 +70,25 @@ final class WebViewViewController: UIViewController {
     
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString) else {
-            print("Error urlComponents")
-            return
+            print("Логирование ошибки")
+            preconditionFailure("Invalid token")
         }
-
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
-
+        
         guard let url = urlComponents.url else {
-            print("Error urlComponents.url")
-            return
+            print("Логирование ошибки")
+            preconditionFailure("Error OAuth urlComponents.url")
         }
-
+        
         let request = URLRequest(url: url)
         webView.load(request)
-        }
+    }
 }
 
 extension WebViewViewController: WKNavigationDelegate {

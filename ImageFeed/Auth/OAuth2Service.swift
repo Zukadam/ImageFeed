@@ -26,7 +26,7 @@ final class OAuth2Service {
     
     // MARK: - Public Methods
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let request: URLRequest = makeOAuthTokenRequest(code: code)
+        guard let request: URLRequest = makeOAuthTokenRequest(code: code) else { return }
         
         let task = urlSession.data(for: request) { [weak self] result in
             guard let self else { return }
@@ -48,11 +48,13 @@ final class OAuth2Service {
         }
         task.resume()
     }
-        
-    func makeOAuthTokenRequest(code: String) -> URLRequest {
+    
+    func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: Constants.unsplashGetTokenURLString) else {
-            preconditionFailure("Invalid token")
+            print("Логирование ошибки")
+            return nil
         }
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "client_secret", value: Constants.secretKey),
@@ -60,8 +62,10 @@ final class OAuth2Service {
             URLQueryItem(name: "code", value: code),
             URLQueryItem(name: "grant_type", value: Constants.grantType)
         ]
+        
         guard let url = urlComponents.url else {
-            preconditionFailure("Error OAuth urlComponents.url")
+            print("Логирование ошибки")
+            return nil
         }
         
         var request = URLRequest(url: url)

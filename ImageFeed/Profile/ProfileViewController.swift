@@ -31,7 +31,7 @@ final class ProfileViewController: UIViewController {
         label.font = .systemFont(ofSize: 13.0)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-
+        
     }()
     
     private lazy var descriptionLabel: UILabel = {
@@ -40,7 +40,7 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +102,7 @@ final class ProfileViewController: UIViewController {
         let descriptionLabelConstrains = self.descriptionLabelConstrains()
         
         NSLayoutConstraint.activate(
-            avatarImageViewConstrains + 
+            avatarImageViewConstrains +
             logoutButtonConstrains +
             nameLabelConstrains + loginNameLabelConstrains +
             descriptionLabelConstrains

@@ -46,7 +46,7 @@ extension SplashViewController {
                 let navigationController = segue.destination as? UINavigationController,
                 let viewController = navigationController.viewControllers[0] as? AuthViewController
                     
-            else { 
+            else {
                 fatalError("Failed to prepare for \(Constants.showAuthenticationScreenSegueIdentifier)")
             }
             viewController.delegate = self
@@ -64,7 +64,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             self.fetchOAuthToken(code)
         }
     }
-
+    
     private func fetchOAuthToken(_ code: String) {
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
             guard let self else { return }
