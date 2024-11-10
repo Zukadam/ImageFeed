@@ -4,7 +4,7 @@ final class ImagesListViewController: UIViewController {
     
     // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
-
+    
     // MARK: - Private Properties
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -12,7 +12,7 @@ final class ImagesListViewController: UIViewController {
         formatter.timeStyle = .none
         return formatter
     }()
-
+    
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let currentDate = Date()
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
@@ -34,8 +34,8 @@ final class ImagesListViewController: UIViewController {
             else {
                 assertionFailure("Invalid segue destination")
                 return
-            }
-
+            } 
+            
             let image = UIImage(named: photosName[indexPath.row])
             viewController.image = image
             
