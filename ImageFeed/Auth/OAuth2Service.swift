@@ -1,16 +1,7 @@
 import Foundation
 
 final class OAuth2Service {
-    // MARK: - Public Properties
-    var authToken: String? {
-        get {
-            storage.token
-        }
-        set {
-            storage.token = newValue
-        }
-    }
-    
+    // MARK: - Public Properties 
     static let shared = OAuth2Service()
     
     // MARK: - Private Properties
@@ -37,7 +28,7 @@ final class OAuth2Service {
                     let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
                     print(responseBody)
                     print(responseBody.accessToken)
-                    self.authToken = responseBody.accessToken
+                    self.storage.token = responseBody.accessToken
                     completion(.success(responseBody.accessToken))
                 } catch {
                     completion(.failure(error))

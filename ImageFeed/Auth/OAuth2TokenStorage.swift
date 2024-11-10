@@ -14,4 +14,7 @@ final class OAuth2TokenStorage {
     
     static let shared = OAuth2TokenStorage()
     private let storage = UserDefaults.standard
+    
+    // MARK: - Initialisers
+    private init(){}
 }
