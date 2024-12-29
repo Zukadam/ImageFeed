@@ -19,8 +19,6 @@ final class SingleImageViewController: UIViewController {
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
-        
         guard let image else { return }
         imageView.image = image
         imageView.frame.size = image.size

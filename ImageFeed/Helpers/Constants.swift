@@ -5,8 +5,8 @@ enum Constants {
     static let secretKey = "0fHYczHXUAUUUdxb8EfJCYkmAgjKSF8MtWIVefyKTyQ"
     static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"
-    static let defaultBaseURL = defaultBaseURLchecker
-    static private var defaultBaseURLchecker: URL {
+    static let defaultBaseURL = defaultBaseURLChecker
+    static private var defaultBaseURLChecker: URL {
         guard let url = URL(string: "https://api.unsplash.com") else { preconditionFailure("Unable to construct unsplashUrl") }
         return url
     }
@@ -16,5 +16,4 @@ enum Constants {
     static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     static let tabBarViewController = "TabBarViewController"
     static let showWebViewSegueIdentifier = "ShowWebView"
-    
 }
