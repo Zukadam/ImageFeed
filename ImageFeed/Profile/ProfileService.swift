@@ -6,76 +6,111 @@ final class ProfileService {
     
     // MARK: - Private Properties
     private(set) var profile: Profile?
+    private let urlSession = URLSession.shared
+    private let storage = OAuth2TokenStorage.shared
+    private let builder = URLRequestBuilder.shared
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+    private var lastToken: String?
+    private var currentTask: URLSessionTask?
     
     // MARK: - Initialisers
     private init() {}
     
     // MARK: - Public Methods
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
-//        assert(Thread.isMainThread, "Not in Main tread")
+        currentTask?.cancel()
         guard let request: URLRequest = makeProfileRequest(token: token ) else {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
-        let task = urlSession.dataTask(with: request) { [weak self] data, response, error in
+        let task = fetch(for: request) { [weak self] response in
+            self?.currentTask = nil // ???
             guard let self else { return }
             DispatchQueue.main.async {
-                if let error {
+                switch response {
+                case .success(let profileResult):
+//                    do {
+//                        let responseBody = try self.decoder.decode(OAuthTokenResponseBody.self, from: data)
+//                        print(responseBody)
+//                        print(responseBody.accessToken)
+//                        self.storage.token = responseBody.accessToken
+//                        completion(.success(responseBody.accessToken))
+//                    }  catch {
+//                        completion(.failure(error))
+//                    }
+                    let profile = Profile(result: profileResult)
+                    completion(.success(profile))
+                case .failure(let error):
                     completion(.failure(error))
-                    return
                 }
-                guard let data else {
-                    completion(.failure(AuthServiceError.invalidRequest))
-                    return
-                }
-                do {
-                    let responseBody = try self.decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    print(responseBody)
-                    print(responseBody.accessToken)
-                    self.storage.token = responseBody.accessToken
-                    completion(.success(responseBody.accessToken))
-                } catch {
-                    completion(.failure(error))
-                }
+//                self.task = nil
+//                self.lastToken = nil
+            }
         }
+//        self.task = task
+//        task.resume()
+    }
+    
+    func fetch(for request: URLRequest, completion: @escaping (Result<ProfileResult, Error>) -> Void) -> URLSessionTask {
+        let fulfillCompletionOnTheMainThread: (Result<ProfileResult, Error>) -> Void = { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+            if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                if 200 ..< 300 ~= statusCode {
+//                    fulfillCompletionOnTheMainThread(.success(data))
+                    // start new code
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(ProfileResult.self, from: data)
+                        fulfillCompletionOnTheMainThread(.success(result))
+                    } catch {
+                        fulfillCompletionOnTheMainThread(.failure(NetworkError.decodingError(error)))
+                    }
+                    // end new code
+                } else {
+                    print("Status code not in correct range")
+                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
+                }
+            } else if let error = error {
+                print("Network error")
+                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
+            } else {
+                print("Other problems in dataTask(with:completionHandler:)")
+                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
+            }
+        })
         task.resume()
+        return task
     }
     
     func makeProfileRequest(token: String) -> URLRequest? {
-        guard var urlComponents = URLComponents(string: Constants.unsplashGetTokenURLString) else {
-            print("Логирование ошибки")
-            return nil
-        }
-        
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: Constants.grantType)
-        ]
-        
-        guard let url = urlComponents.url else {
-            print("Логирование ошибки")
-            assertionFailure("Failed to create URL")
-            return nil
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        
-        print("Request for makeProfileRequest method \(request)")
-        
-        return request
+//        guard let url = URL(string: Constants.unsplashGetProfileURLString) else {
+//            print("Логирование ошибки")
+//            return nil
+//        }
+//       
+//        let token = String(describing: storage.token!)
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "GET"
+//        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//
+//        print("Request for makeProfileRequest method \(request)")
+//        return request
+        builder.makeHTTPRequest(path: "/me", httpMethod: "GET", baseURLString: Constants.defaultBaseURLString)
     }
-    
-//    Метод fetchProfile не должен приводить к гонкам, если он вызывается несколько раз подряд (каждый следующий вызов не дожидается завершения         предыдущего).
+}
+
 //    На экране ProfileViewController в методе viewDidLoad нужно вызвать метод fetchProfile и обновить лейблы:
 //    nameLabel (например, "Ivan Ivanov"),
 //    loginNameLabel (например, "@ivanivanov"),
 //    и descriptionLabel (совпадает с bio).
 //    Добавьте вывод сообщений об ошибках в консоль.
-    
-}
-

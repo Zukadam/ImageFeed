@@ -11,6 +11,7 @@ final class OAuth2Service {
     // MARK: - Private Properties
     private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
+    private let builder = URLRequestBuilder.shared
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -84,17 +85,15 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: Constants.grantType)
         ]
         
-        guard let url = urlComponents.url else {
+        guard let url = urlComponents.url?.absoluteString else {
             print("Логирование ошибки")
             assertionFailure("Failed to create URL")
             return nil
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        let request = builder.makeHTTPRequest(path: "", httpMethod: "POST", baseURLString: url)
         
-        print("Request for makeOAuthTokenRequest method \(request)")
-        
+        print("Request for makeOAuthTokenRequest method \(String(describing: request))")
         return request
     }
 }

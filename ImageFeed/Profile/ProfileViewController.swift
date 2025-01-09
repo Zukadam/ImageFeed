@@ -2,7 +2,7 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    // MARK: - Private Properties
+    // MARK: - Private Properties    
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "avatar")
