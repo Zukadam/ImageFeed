@@ -4,6 +4,7 @@ import UIKit
 final class SplashViewController: UIViewController {
     // MARK: - Private Properties
     private let oauth2Service = OAuth2Service.shared
+    private let profileService = ProfileService.shared
     private let storage = OAuth2TokenStorage.shared
     
     // MARK: - Overrides Methods
@@ -18,8 +19,9 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil {
+        if let token = storage.token {
             switchToTabBarController()
+            fetchProfile(token)
         } else {
             performSegue(withIdentifier: Constants.showAuthenticationScreenSegueIdentifier, sender: nil)
         }
@@ -64,20 +66,44 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self else { return }
             self.fetchOAuthToken(code)
         }
+        
     }
     
     private func fetchOAuthToken(_ code: String) {
         UIBlockingProgressHUD.show()
         oauth2Service.fetchOAuthToken(code) { [weak self] result in
-            guard let self else { return }
             UIBlockingProgressHUD.dismiss()
+            
+            guard let self else { return }
+            
             switch result {
-            case .success:
+            case .success(let token):
                 self.switchToTabBarController()
+                fetchProfile(token)
             case .failure:
                 // TODO [Sprint 11]
                 break
             }
         }
     }
+    
+    private func fetchProfile(_ token: String) {
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+
+            guard let self = self else { return }
+
+            switch result {
+            case .success:
+//               self.switchToTabBarController()
+                print(result)
+
+            case .failure:
+                // TODO [Sprint 11] Покажите ошибку получения профиля
+                break
+            }
+        }
+    }
+    
 }

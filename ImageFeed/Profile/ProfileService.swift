@@ -30,7 +30,7 @@ final class ProfileService {
         
         let task = fetch(for: request) { [weak self] response in
             self?.currentTask = nil // ???
-            guard let self else { return }
+//            guard let self else { return }
             DispatchQueue.main.async {
                 switch response {
                 case .success(let profileResult):
@@ -53,7 +53,7 @@ final class ProfileService {
             }
         }
 //        self.task = task
-//        task.resume()
+        task.resume()
     }
     
     func fetch(for request: URLRequest, completion: @escaping (Result<ProfileResult, Error>) -> Void) -> URLSessionTask {
@@ -72,6 +72,7 @@ final class ProfileService {
                         let decoder = JSONDecoder()
                         let result = try decoder.decode(ProfileResult.self, from: data)
                         fulfillCompletionOnTheMainThread(.success(result))
+                        print(result)
                     } catch {
                         fulfillCompletionOnTheMainThread(.failure(NetworkError.decodingError(error)))
                     }
