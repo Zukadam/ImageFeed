@@ -22,15 +22,26 @@ final class ProfileService {
     
     // MARK: - Public Methods
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
-        currentTask?.cancel()
+        assert(Thread.isMainThread, "Not in Main tread")
+        if currentTask != nil {
+            if lastToken != token {
+                currentTask?.cancel()
+            } else {
+                if lastToken == token {
+                    completion(.failure(AuthServiceError.invalidRequest))
+                }
+            }
+            lastToken = token
+        }
+        
         guard let request: URLRequest = makeProfileRequest(token: token ) else {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
         
         let task = fetch(for: request) { [weak self] response in
-            self?.currentTask = nil // ???
-//            guard let self else { return }
+//            self?.currentTask = nil // ???
+            guard let self else { return }
             DispatchQueue.main.async {
                 switch response {
                 case .success(let profileResult):
@@ -44,15 +55,17 @@ final class ProfileService {
 //                        completion(.failure(error))
 //                    }
                     let profile = Profile(result: profileResult)
+                    self.profile = profile
                     completion(.success(profile))
                 case .failure(let error):
+                    print("Profile Service Error = \(error)")
                     completion(.failure(error))
                 }
-//                self.task = nil
-//                self.lastToken = nil
+                self.currentTask = nil
+                self.lastToken = nil
             }
         }
-//        self.task = task
+        self.currentTask = task
         task.resume()
     }
     
