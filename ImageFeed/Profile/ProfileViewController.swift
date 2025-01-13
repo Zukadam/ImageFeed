@@ -4,7 +4,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     private let profileService = ProfileService.shared
-        
+    
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "avatar")
@@ -113,21 +113,21 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-//        self.nameLabel.text = "Екатерина Новикова"
+        //        self.nameLabel.text = "Екатерина Новикова"
         self.nameLabel.textColor = .ypWhiteIOS
         
-//        self.loginNameLabel.text = "@ekaterina_nov"
+        //        self.loginNameLabel.text = "@ekaterina_nov"
         self.loginNameLabel.textColor = .ypGrayIOS
         
-//        self.descriptionLabel.text = "Hello, World!"
+        //        self.descriptionLabel.text = "Hello, World!"
         self.descriptionLabel.textColor = .ypWhiteIOS
     }
     
     private func updateProfileDetails() {
         guard let profile = profileService.profile else { return }
         
-        self.nameLabel.text = profileService.profile?.name
-        self.loginNameLabel.text = profileService.profile?.loginName
-        self.descriptionLabel.text = profileService.profile?.bio
+        self.nameLabel.text = profile.name
+        self.loginNameLabel.text = profile.loginName
+        self.descriptionLabel.text = profile.bio
     }
 }

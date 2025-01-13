@@ -7,7 +7,7 @@ final class ProfileService {
     // MARK: - Private Properties
     private(set) var profile: Profile?
     private let urlSession = URLSession.shared
-    private let storage = OAuth2TokenStorage.shared
+//    private let storage = OAuth2TokenStorage.shared
     private let builder = URLRequestBuilder.shared
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -34,7 +34,7 @@ final class ProfileService {
             lastToken = token
         }
         
-        guard let request: URLRequest = makeProfileRequest(token: token ) else {
+        guard let request: URLRequest = makeProfileRequest(/*token: token */) else {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
@@ -75,8 +75,8 @@ final class ProfileService {
                 completion(result)
             }
         }
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+//        let session = URLSession.shared
+        let task = urlSession.dataTask(with: request, completionHandler: { data, response, error in
             if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if 200 ..< 300 ~= statusCode {
 //                    fulfillCompletionOnTheMainThread(.success(data))
@@ -106,7 +106,7 @@ final class ProfileService {
         return task
     }
     
-    func makeProfileRequest(token: String) -> URLRequest? {
+    func makeProfileRequest(/*token: String*/) -> URLRequest? {
 //        guard let url = URL(string: Constants.unsplashGetProfileURLString) else {
 //            print("Логирование ошибки")
 //            return nil
