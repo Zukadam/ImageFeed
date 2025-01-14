@@ -3,6 +3,7 @@ import Foundation
 final class ProfileImageService {
     // MARK: - Public Properties
     static let shared = ProfileImageService()
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     // MARK: - Private Properties
     private let urlSession = URLSession.shared
@@ -21,11 +22,11 @@ final class ProfileImageService {
     private init() {}
     
     // MARK: - Public Methods
-    func fetchProfileImageURL(userName: String, _ completion: @escaping (Result<String, Error>) -> Void) {
+    func fetchProfileImageURL(with username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread, "Not in Main tread")
         task?.cancel()
         
-        guard let request: URLRequest = makeProfileImageRequest(userName: userName) else {
+        guard let request: URLRequest = makeProfileImageRequest(userName: username) else {
             completion(.failure(AuthServiceError.invalidRequest))
             return
         }
@@ -35,9 +36,15 @@ final class ProfileImageService {
             DispatchQueue.main.async {
                 switch response {
                 case .success(let userResult):
-                    guard let imageURL = userResult.profileImage.small else { preconditionFailure("cant get image URL") }
-                    self.avatarURL = imageURL
-                    completion(.success(imageURL))
+                    guard let profileImageURL = userResult.profileImage.small else { preconditionFailure("can't get image URL") }
+                    self.avatarURL = profileImageURL
+                    completion(.success(profileImageURL))
+                    NotificationCenter.default
+                        .post(
+                            name: ProfileImageService.didChangeNotification,
+                            object: self,
+                            userInfo: ["URL": profileImageURL]
+                    )
                 case .failure(let error):
                     print("Profile Image Service Error = \(error)")
                     completion(.failure(error))

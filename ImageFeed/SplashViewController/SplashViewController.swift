@@ -5,6 +5,7 @@ final class SplashViewController: UIViewController {
     // MARK: - Private Properties
     private let oauth2Service = OAuth2Service.shared
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let storage = OAuth2TokenStorage.shared
     
     // MARK: - Overrides Methods
@@ -102,6 +103,17 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .failure:
                 // TODO [Sprint 11] Покажите ошибку получения профиля
                 break
+            }
+        }
+    }
+    
+    private func fetchProfileImageURL(username: String) {
+        profileImageService.fetchProfileImageURL(with: username) { result in
+            switch result {
+            case .success(let imageURL):
+                print("imageURL - \(imageURL)")
+            case .failure(let error):
+                print("fetch image error \(error)")
             }
         }
     }

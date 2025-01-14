@@ -4,6 +4,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     private let profileService = ProfileService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
@@ -49,6 +50,8 @@ final class ProfileViewController: UIViewController {
         drawSelf()
         setupView()
         updateProfileDetails()
+        addProfileImageObserver()
+        updateAvatar()
     }
     
     // MARK: - Private Methods
@@ -125,9 +128,30 @@ final class ProfileViewController: UIViewController {
     
     private func updateProfileDetails() {
         guard let profile = profileService.profile else { return }
+        //TODO ProfileImage
         
         self.nameLabel.text = profile.name
         self.loginNameLabel.text = profile.loginName
         self.descriptionLabel.text = profile.bio
+    }
+    
+    private func addProfileImageObserver() {
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
 }
