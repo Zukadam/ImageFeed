@@ -154,4 +154,4 @@ final class ProfileViewController: UIViewController {
         else { return }
         // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
-}
+}                                                 

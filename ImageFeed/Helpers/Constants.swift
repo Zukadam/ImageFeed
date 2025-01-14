@@ -10,7 +10,8 @@ enum Constants {
         guard let url = URL(string: "https://api.unsplash.com") else { preconditionFailure("Unable to construct unsplashUrl") }
         return url
     }
-    static let defaultBaseURLString = "https://api.unsplash.com"
+    static let defaultBaseURLString = "https://unsplash.com"
+    static let defaultBaseAPIURLString = "https://api.unsplash.com"
     static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
     static let unsplashGetProfileURLString = "https://unsplash.com/me"

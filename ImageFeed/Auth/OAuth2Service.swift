@@ -91,7 +91,7 @@ final class OAuth2Service {
             return nil
         }
         
-        let request = builder.makeHTTPRequest(path: "", httpMethod: "POST", baseURLString: url)
+        let request = builder.makeHTTPRequest(path: url, httpMethod: "POST", baseURLString: Constants.defaultBaseURLString)
         
         print("Request for makeOAuthTokenRequest method \(String(describing: request))")
         return request

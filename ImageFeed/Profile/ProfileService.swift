@@ -119,7 +119,7 @@ final class ProfileService {
 //
 //        print("Request for makeProfileRequest method \(request)")
 //        return request
-        builder.makeHTTPRequest(path: "/me", httpMethod: "GET", baseURLString: Constants.defaultBaseURLString)
+        builder.makeHTTPRequest(path: "/me", httpMethod: "GET", baseURLString: Constants.defaultBaseAPIURLString)
     }
 }
 
