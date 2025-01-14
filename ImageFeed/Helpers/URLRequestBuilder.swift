@@ -18,7 +18,7 @@ final class URLRequestBuilder {
             let url = URL(string: baseURLString),
             let baseUrl = URL(string: path, relativeTo: url)
         else {
-            print("Логирование ошибки")
+            print("url or baseUrl creation failed in \(#function): baseURLString = \(baseURLString), path = \(path)")
             return nil
         }
         

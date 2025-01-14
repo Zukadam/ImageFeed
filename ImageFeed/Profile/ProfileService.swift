@@ -43,7 +43,7 @@ final class ProfileService {
                     self.profile = profile
                     completion(.success(profile))
                 case .failure(let error):
-                    print("Profile Service Error = \(error)")
+                    print("Profile Service Error in \(#function): error = \(error)")
                     completion(.failure(error))
                 }
                 self.currentTask = nil

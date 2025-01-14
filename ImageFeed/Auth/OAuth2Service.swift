@@ -50,7 +50,7 @@ final class OAuth2Service {
                 self.storage.token = authToken
                 completion(.success(authToken))
             case .failure(let error):
-                print("OAuth2Service Error - \(error)")
+                print("OAuth2Service Error in \(#function): error = \(error)")
                 completion(.failure(error))
             }
             self.task = nil
@@ -62,7 +62,7 @@ final class OAuth2Service {
     
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: Constants.unsplashGetTokenURLString) else {
-            print("Логирование ошибки")
+            print("Failed construct URL in \(#function)")
             return nil
         }
         
@@ -75,7 +75,7 @@ final class OAuth2Service {
         ]
         
         guard let url = urlComponents.url?.absoluteString else {
-            print("Логирование ошибки")
+            print("Failed construct URL in \(#function)")
             assertionFailure("Failed to create URL")
             return nil
         }

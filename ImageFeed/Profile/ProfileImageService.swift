@@ -40,7 +40,7 @@ final class ProfileImageService {
                             userInfo: ["URL": profileImageURL]
                     )
                 case .failure(let error):
-                    print("Profile Image Service Error = \(error)")
+                    print("Profile Image Service Error in \(#function): error = \(error)")
                     completion(.failure(error))
                 }
                 self.task = nil

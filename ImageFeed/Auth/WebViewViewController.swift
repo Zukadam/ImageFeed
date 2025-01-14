@@ -84,7 +84,7 @@ final class WebViewViewController: UIViewController {
     
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString) else {
-            print("Логирование ошибки")
+            print("Invalid token in \(#function)")
             preconditionFailure("Invalid token")
         }
         
@@ -96,7 +96,7 @@ final class WebViewViewController: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
-            print("Логирование ошибки")
+            print("Error OAuth urlComponents.url in \(#function), urlComponents = \(urlComponents)")
             preconditionFailure("Error OAuth urlComponents.url")
         }
         
