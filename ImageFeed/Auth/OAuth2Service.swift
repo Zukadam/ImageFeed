@@ -12,11 +12,6 @@ final class OAuth2Service {
     private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }()
     private var task: URLSessionTask?
     private var lastCode: String?
     
@@ -46,26 +41,20 @@ final class OAuth2Service {
             return
         }
         
-        let task = urlSession.data(for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) {
+            [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
             guard let self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    do {
-                        let responseBody = try self.decoder.decode(OAuthTokenResponseBody.self, from: data)
-                        print(responseBody)
-                        print(responseBody.accessToken)
-                        self.storage.token = responseBody.accessToken
-                        completion(.success(responseBody.accessToken))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-                self.task = nil
-                self.lastCode = nil
+            switch response {
+            case .success(let responseBody):
+                let authToken = responseBody.accessToken
+                self.storage.token = authToken
+                completion(.success(authToken))
+            case .failure(let error):
+                print("OAuth2Service Error - \(error)")
+                completion(.failure(error))
             }
+            self.task = nil
+            self.lastCode = nil
         }
         self.task = task
         task.resume()

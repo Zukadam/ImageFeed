@@ -9,13 +9,7 @@ final class ProfileImageService {
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
     private var task: URLSessionTask?
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }()
     private (set) var avatarURL: String?
-    private var lastToken: String?
     private var currentTask: URLSessionTask?
     
     // MARK: - Initialisers
@@ -31,9 +25,9 @@ final class ProfileImageService {
             return
         }
         
-        let task = fetch(for: request) { [weak self] response in
+        let task = urlSession.objectTask(for: request) {
+            [weak self] (response: Result<UserResult, Error>) in
             guard let self else { return }
-            DispatchQueue.main.async {
                 switch response {
                 case .success(let userResult):
                     guard let profileImageURL = userResult.profileImage.small else { preconditionFailure("can't get image URL") }
@@ -50,44 +44,9 @@ final class ProfileImageService {
                     completion(.failure(error))
                 }
                 self.task = nil
-            }
         }
         self.task = task
         task.resume()
-    }
-    
-    func fetch(for request: URLRequest, completion: @escaping (Result<UserResult, Error>) -> Void) -> URLSessionTask {
-        let fulfillCompletionOnTheMainThread: (Result<UserResult, Error>) -> Void = {
-            result in DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-        
-        let task = urlSession.dataTask(with: request, completionHandler: { data, response, error in
-            if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if 200 ..< 300 ~= statusCode {
-                    do {
-                        let decoder = JSONDecoder()
-                        let result = try decoder.decode(UserResult.self, from: data)
-                        fulfillCompletionOnTheMainThread(.success(result))
-                        print(result)
-                    } catch {
-                        fulfillCompletionOnTheMainThread(.failure(NetworkError.decodingError(error)))
-                    }
-                } else {
-                    print("Status code not in correct range")
-                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
-                }
-            } else if let error = error {
-                print("Network error")
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
-            } else {
-                print("Other problems in dataTask(with:completionHandler:)")
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
-            }
-        })
-        task.resume()
-        return task
     }
     
     func makeProfileImageRequest(userName: String) -> URLRequest? {

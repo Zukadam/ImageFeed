@@ -116,7 +116,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-        //        self.nameLabel.text = "Екатерина Новикова"
+//                self.nameLabel.text = "Екатерина Новикова"
         self.nameLabel.textColor = .ypWhiteIOS
         
         //        self.loginNameLabel.text = "@ekaterina_nov"
