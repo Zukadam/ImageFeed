@@ -54,6 +54,10 @@ final class ProfileService {
     }
     
     func makeProfileRequest() -> URLRequest? {
-        builder.makeHTTPRequest(path: "/me", httpMethod: "GET", baseURLString: Constants.defaultBaseAPIURLString)
+        builder.makeHTTPRequest(
+            path: "/me",
+            httpMethod: "GET",
+            baseURLString: Constants.defaultBaseAPIURLString
+        )
     }
 }

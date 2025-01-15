@@ -7,6 +7,9 @@ enum AuthServiceError: Error {
 final class OAuth2Service {
     // MARK: - Public Properties
     static let shared = OAuth2Service()
+    var isAuthenticated: Bool {
+        storage.token != nil
+    }
     
     // MARK: - Private Properties
     private let storage = OAuth2TokenStorage.shared
