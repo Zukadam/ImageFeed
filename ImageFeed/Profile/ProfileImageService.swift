@@ -27,22 +27,22 @@ final class ProfileImageService {
         let task = urlSession.objectTask(for: request) {
             [weak self] (response: Result<UserResult, Error>) in
             guard let self else { return }
-                switch response {
-                case .success(let userResult):
-                    guard let profileImageURL = userResult.profileImage.large else { preconditionFailure("can't get image URL") }
-                    self.avatarURL = URL(string: profileImageURL)
-                    completion(.success(profileImageURL))
-                    NotificationCenter.default
-                        .post(
-                            name: Constants.didChangeNotification,
-                            object: self,
-                            userInfo: [Notification.userInfoImageURLKey: profileImageURL]
+            switch response {
+            case .success(let userResult):
+                guard let profileImageURL = userResult.profileImage.large else { preconditionFailure("can't get image URL") }
+                self.avatarURL = URL(string: profileImageURL)
+                completion(.success(profileImageURL))
+                NotificationCenter.default
+                    .post(
+                        name: Constants.didChangeNotification,
+                        object: self,
+                        userInfo: [Notification.userInfoImageURLKey: profileImageURL]
                     )
-                case .failure(let error):
-                    print("Profile Image Service Error in \(#function): error = \(error)")
-                    completion(.failure(error))
-                }
-                self.task = nil
+            case .failure(let error):
+                print("Profile Image Service Error in \(#function): error = \(error)")
+                completion(.failure(error))
+            }
+            self.task = nil
         }
         self.task = task
         task.resume()
