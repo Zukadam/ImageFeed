@@ -7,11 +7,8 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     private let storage = OAuth2TokenStorage.shared
 //    private let alertPresenter = AlertPresenter()
-    
     private var authenticateStatus = false
-    
-    private let showLoginFlowSegueIdentifier = "ShowLoginFlow" // transition to Constants
-    
+        
     // MARK: - Overrides Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

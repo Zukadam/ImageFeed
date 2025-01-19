@@ -19,4 +19,6 @@ enum Constants {
     static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     static let tabBarViewController = "TabBarViewController"
     static let showWebViewSegueIdentifier = "ShowWebView"
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let showLoginFlowSegueIdentifier = "ShowLoginFlow"
 }

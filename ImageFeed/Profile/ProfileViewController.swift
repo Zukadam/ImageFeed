@@ -1,9 +1,11 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var avatarImageView: UIImageView = {
@@ -50,8 +52,17 @@ final class ProfileViewController: UIViewController {
         drawSelf()
         setupView()
         updateProfileDetails()
+        
+        if let url = profileImageService.avatarURL {
+            updateAvatar(url: url)
+        }
+        
         addProfileImageObserver()
-        updateAvatar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        updateProfileDetails() // here or in viewDidLoad?
     }
     
     // MARK: - Private Methods
@@ -133,25 +144,47 @@ final class ProfileViewController: UIViewController {
         self.nameLabel.text = profile.name
         self.loginNameLabel.text = profile.loginName
         self.descriptionLabel.text = profile.bio
+        
+        profileImageService.fetchProfileImageURL(with: profile.username) { _ in
+            // no competion
+        }
     }
     
     private func addProfileImageObserver() {
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.didChangeNotification,
+                forName: Constants.didChangeNotification,
                 object: nil,
                 queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
+            ) { [weak self] notification in
+                guard let self else { return }
+                self.updateAvatar(notification: notification)
             }
     }
     
-    private func updateAvatar() {
+    @objc
+    private func updateAvatar(notification: Notification) {
         guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
+            isViewLoaded,
+            let userInfo = notification.userInfo,
+//            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let profileImageURL = notification.userInfoImageURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        
+        updateAvatar(url: url)
     }
-}                                                 
+    
+    private func updateAvatar(url: URL) {
+        avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 61, backgroundColor: .ypBackgroundIOS)
+        avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
+}
+
+extension Notification {
+    static let userInfoImageURLKey: String = "URL"
+    var userInfoImageURL: String? {
+        userInfo?[Notification.userInfoImageURLKey] as? String
+    }
+}

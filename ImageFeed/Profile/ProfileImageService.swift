@@ -3,13 +3,12 @@ import Foundation
 final class ProfileImageService {
     // MARK: - Public Properties
     static let shared = ProfileImageService()
-    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     // MARK: - Private Properties
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
     private var task: URLSessionTask?
-    private (set) var avatarURL: String?
+    private (set) var avatarURL: URL?
     private var currentTask: URLSessionTask?
     
     // MARK: - Initialisers
@@ -30,14 +29,14 @@ final class ProfileImageService {
             guard let self else { return }
                 switch response {
                 case .success(let userResult):
-                    guard let profileImageURL = userResult.profileImage.small else { preconditionFailure("can't get image URL") }
-                    self.avatarURL = profileImageURL
+                    guard let profileImageURL = userResult.profileImage.large else { preconditionFailure("can't get image URL") }
+                    self.avatarURL = URL(string: profileImageURL)
                     completion(.success(profileImageURL))
                     NotificationCenter.default
                         .post(
-                            name: ProfileImageService.didChangeNotification,
+                            name: Constants.didChangeNotification,
                             object: self,
-                            userInfo: ["URL": profileImageURL]
+                            userInfo: [Notification.userInfoImageURLKey: profileImageURL]
                     )
                 case .failure(let error):
                     print("Profile Image Service Error in \(#function): error = \(error)")
