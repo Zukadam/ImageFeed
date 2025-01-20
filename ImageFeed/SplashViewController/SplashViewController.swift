@@ -1,4 +1,5 @@
 import UIKit
+//import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     // MARK: - Private Properties
@@ -6,10 +7,8 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let storage = OAuth2TokenStorage.shared
-    //    private let alertPresenter = AlertPresenter()
     private var authenticateStatus = false
     private var splashScreenLogoImageView: UIImageView?
-    
     
     // MARK: - Overrides Methods
     override func viewWillAppear(_ animated: Bool) {
@@ -41,17 +40,28 @@ final class SplashViewController: UIViewController {
     }
     
     private func showAuthController() {
-        let authViewController = AuthViewController()
+        //        let authViewController = AuthViewController()
+        //        authViewController.delegate = self
+        //        authViewController.modalPresentationStyle = .fullScreen
+        //        present(authViewController, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard
+            let navigationViewController = storyboard.instantiateViewController(withIdentifier: Constants.navigationController) as? UINavigationController,
+            let authViewController = navigationViewController.topViewController as? AuthViewController
+        else {return}
+        
         authViewController.delegate = self
-        authViewController.modalPresentationStyle = .fullScreen
-        present(authViewController, animated: true)
+        navigationViewController.modalPresentationStyle = .fullScreen
+        present(navigationViewController, animated: true) {
+            
+        }
     }
     
     private func isAuthenticated() {
         guard !authenticateStatus else { return }
         
         authenticateStatus = true
-        
+//        KeychainWrapper.standard.removeObject(forKey: "Auth token")
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in
@@ -59,7 +69,6 @@ final class SplashViewController: UIViewController {
                 UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
             }
-            
         } else {
             showAuthController()
         }
@@ -90,7 +99,6 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self else { return }
             self.fetchOAuthToken(code)
         }
-        
     }
     
     private func fetchOAuthToken(_ code: String) {

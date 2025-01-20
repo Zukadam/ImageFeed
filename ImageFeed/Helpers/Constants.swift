@@ -18,7 +18,7 @@ enum Constants {
     static let grantType = "authorization_code"
 //    static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     static let showAuthenticationScreenSegueIdentifier = "AuthViewControllerID"
-
+    static let navigationController = "NavigationControllerID"
     static let tabBarViewController = "TabBarViewController"
     static let showWebViewSegueIdentifier = "ShowWebView"
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
