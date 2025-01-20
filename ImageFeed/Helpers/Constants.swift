@@ -16,7 +16,9 @@ enum Constants {
     static let unsplashGetTokenURLString = "https://unsplash.com/oauth/token"
     static let unsplashGetProfileURLString = "https://unsplash.com/me"
     static let grantType = "authorization_code"
-    static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+//    static let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
+    static let showAuthenticationScreenSegueIdentifier = "AuthViewControllerID"
+
     static let tabBarViewController = "TabBarViewController"
     static let showWebViewSegueIdentifier = "ShowWebView"
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")

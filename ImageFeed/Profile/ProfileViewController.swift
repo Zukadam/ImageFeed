@@ -166,8 +166,6 @@ final class ProfileViewController: UIViewController {
     private func updateAvatar(notification: Notification) {
         guard
             isViewLoaded,
-            let userInfo = notification.userInfo,
-//            let profileImageURL = ProfileImageService.shared.avatarURL,
             let profileImageURL = notification.userInfoImageURL,
             let url = URL(string: profileImageURL)
         else { return }
