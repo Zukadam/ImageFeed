@@ -62,7 +62,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        updateProfileDetails() // here or in viewDidLoad?
+        //        updateProfileDetails() // here or in viewDidLoad?
     }
     
     // MARK: - Private Methods
@@ -127,7 +127,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-//                self.nameLabel.text = "Екатерина Новикова"
+        //                self.nameLabel.text = "Екатерина Новикова"
         self.nameLabel.textColor = .ypWhiteIOS
         
         //        self.loginNameLabel.text = "@ekaterina_nov"

@@ -1,5 +1,4 @@
 import UIKit
-import SwiftKeychainWrapper // Отладочный import
 
 final class SplashViewController: UIViewController {
     // MARK: - Private Properties
@@ -51,7 +50,6 @@ final class SplashViewController: UIViewController {
         authViewController.delegate = self
         navigationViewController.modalPresentationStyle = .fullScreen
         present(navigationViewController, animated: true) {
-            print("Экран авторизации отображен") // Отладочный print
         }
     }
     
@@ -59,8 +57,6 @@ final class SplashViewController: UIViewController {
         guard !authenticateStatus else { return }
         
         authenticateStatus = true
-        KeychainWrapper.standard.removeObject(forKey: "Auth token") // Отладочное удаление токена
-        print("Токен удален: \(storage.token == nil)") // Отладочный print
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in

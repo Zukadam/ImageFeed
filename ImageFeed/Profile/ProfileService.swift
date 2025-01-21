@@ -35,20 +35,19 @@ final class ProfileService {
         
         let task = urlSession.objectTask(for: request) {
             [weak self] (response: Result<ProfileResult, Error>) in
-//            self?.currentTask = nil // ???
             guard let self else { return }
-                switch response {
-                case .success(let profileResult):
-                    let profile = Profile(result: profileResult)
-                    self.profile = profile
-                    completion(.success(profile))
-                case .failure(let error):
-                    print("Profile Service Error in \(#function): error = \(error)")
-                    completion(.failure(error))
-                }
-                self.currentTask = nil
-                self.lastToken = nil
+            switch response {
+            case .success(let profileResult):
+                let profile = Profile(result: profileResult)
+                self.profile = profile
+                completion(.success(profile))
+            case .failure(let error):
+                print("Profile Service Error in \(#function): error = \(error)")
+                completion(.failure(error))
             }
+            self.currentTask = nil
+            self.lastToken = nil
+        }
         self.currentTask = task
         task.resume()
     }
