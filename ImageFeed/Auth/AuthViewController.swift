@@ -21,6 +21,13 @@ final class AuthViewController: UIViewController {
                 fatalError("Failed to prepare for \(Constants.showWebViewSegueIdentifier)")
             }
             webViewViewController.delegate = self
+            
+//            let navigationController = UINavigationController(rootViewController: webViewViewController)
+//            navigationController.modalPresentationStyle = .fullScreen
+//            present(navigationController, animated: true) {
+//                print("WebViewViewController отображен") // Отладочный print
+//            }
+            
         } else {
             super.prepare(for: segue, sender: sender)
         }

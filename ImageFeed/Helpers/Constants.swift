@@ -20,7 +20,8 @@ enum Constants {
     static let showAuthenticationScreenSegueIdentifier = "AuthViewControllerID"
     static let navigationController = "NavigationControllerID"
     static let tabBarViewController = "TabBarViewController"
-    static let showWebViewSegueIdentifier = "WebViewViewControllerID"
+    static let webViewViewController = "WebViewViewControllerID"
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let showLoginFlowSegueIdentifier = "ShowLoginFlow"
+    static let showWebViewSegueIdentifier = "ShowWebView"
 }

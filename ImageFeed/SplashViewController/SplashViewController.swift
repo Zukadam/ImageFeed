@@ -14,7 +14,6 @@ final class SplashViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
-        //        checkAuthStatus()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
