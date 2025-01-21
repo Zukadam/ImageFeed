@@ -81,7 +81,7 @@ final class SplashViewController: UIViewController {
         splashScreenLogoImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(splashScreenLogoImageView)
         splashScreenLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        splashScreenLogoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 272).isActive = true
+        splashScreenLogoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         splashScreenLogoImageView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         splashScreenLogoImageView.widthAnchor.constraint(equalToConstant: 72).isActive = true
         self.splashScreenLogoImageView = splashScreenLogoImageView
