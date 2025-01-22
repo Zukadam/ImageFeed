@@ -34,7 +34,7 @@ final class ImagesListViewController: UIViewController {
             else {
                 assertionFailure("Invalid segue destination")
                 return
-            } 
+            }
             
             let image = UIImage(named: photosName[indexPath.row])
             viewController.image = image
@@ -66,7 +66,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
@@ -96,5 +96,19 @@ extension ImagesListViewController {
         cell.cellImage.image = image
         cell.dateLabel.text = dateFormatter.string(from: currentDate)
         cell.likeButton.setImage(likeImage, for: .normal)
+    }
+}
+// TODO: - Вызов функции fetchPhotosNextPage из UI
+//
+//Вызывать функцию fetchPhotosNextPage() мы будем из метода tableView(_:, willDisplay:, forRowAt:) класса ImagesListViewController.
+//Метод tableView(_:, willDisplay:, forRowAt:) вызывается прямо перед тем, как ячейка таблицы будет показана на экране. В этом методе 
+//можно проверить условие indexPath.row + 1 == photos.count, и если оно верно — вызывать fetchPhotosNextPage().
+extension ImagesListViewController {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
+        // ...
     }
 }
