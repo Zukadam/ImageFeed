@@ -50,7 +50,6 @@ final class OAuth2Service {
             switch response {
             case .success(let responseBody):
                 let authToken = responseBody.accessToken
-                self.storage.token = authToken
                 completion(.success(authToken))
             case .failure(let error):
                 print("OAuth2Service Error in \(#function): error = \(error)")
