@@ -12,9 +12,9 @@ struct Profile {
 extension Profile {
     init(result profile: ProfileResult) {
         self.init(
-            username: profile.userLogin,
+            username: profile.username,
             name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
-            loginName: "@\(profile.userLogin)",
+            loginName: "@\(profile.username)",
             bio: profile.bio
         )
     }
