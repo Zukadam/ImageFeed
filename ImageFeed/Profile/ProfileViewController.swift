@@ -62,7 +62,6 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        updateProfileDetails() // here or in viewDidLoad?
     }
     
     // MARK: - Private Methods
@@ -127,26 +126,19 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-        //                self.nameLabel.text = "Екатерина Новикова"
         self.nameLabel.textColor = .ypWhiteIOS
-        
-        //        self.loginNameLabel.text = "@ekaterina_nov"
         self.loginNameLabel.textColor = .ypGrayIOS
-        
-        //        self.descriptionLabel.text = "Hello, World!"
         self.descriptionLabel.textColor = .ypWhiteIOS
     }
     
     private func updateProfileDetails() {
         guard let profile = profileService.profile else { return }
-        //TODO ProfileImage
         
-        self.nameLabel.text = profile.name
-        self.loginNameLabel.text = profile.loginName
-        self.descriptionLabel.text = profile.bio
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
         
         profileImageService.fetchProfileImageURL(with: profile.username) { _ in
-            // no competion
         }
     }
     

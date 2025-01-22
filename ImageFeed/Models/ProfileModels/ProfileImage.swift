@@ -1,6 +1,6 @@
 import Foundation
 
-struct ProfileImage: Codable { // Decodable
+struct ProfileImage: Codable {
     // MARK: - Public Properties
     let small: String?
     let medium: String?

@@ -26,7 +26,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        isAuthenticated()
+        authenticate()
     }
     
     // MARK: - Private Methods
@@ -53,17 +53,15 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    private func isAuthenticated() {
+    private func authenticate() {
         guard !authenticateStatus else { return }
-        
         authenticateStatus = true
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in
                 guard let self else { return }
                 UIBlockingProgressHUD.dismiss()
-                self.switchToTabBarController()
-            }
+                self.switchToTabBarController()}
         } else {
             showAuthController()
         }
@@ -108,8 +106,10 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchProfile { UIBlockingProgressHUD.dismiss() }
             case .failure(let error):
                 print("Fetch token error in \(#function): error = \(error)")
-                self.showLoginAlert()
                 UIBlockingProgressHUD.dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    self.showLoginAlert()
+                }
             }
         }
     }
@@ -121,12 +121,14 @@ extension SplashViewController: AuthViewControllerDelegate {
             
             switch result {
             case .success(let profile):
-                self.switchToTabBarController()
                 let username = profile.username
                 self.fetchProfileImageURL(username: username)
             case .failure(let error):
                 print("Fetch token error in \(#function): error = \(error)")
-                self.showLoginAlert()
+                UIBlockingProgressHUD.dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    self.showLoginAlert()
+                }
             }
             completion()
         }
@@ -154,7 +156,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             ) { [weak self] in
                 guard let self else { preconditionFailure("weak self error")}
                 self.authenticateStatus = false
-                self.isAuthenticated()
+                self.authenticate()
             }
             AlertPresenter.showAlert(model: alertModel, vc: self)
         }

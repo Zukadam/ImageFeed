@@ -23,7 +23,7 @@ final class WebViewViewController: UIViewController {
         webView.navigationDelegate = self
         loadAuthView()
         updateProgress()
-        observerWKWebViewProgress() 
+        observerWKWebViewProgress()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,11 +43,11 @@ final class WebViewViewController: UIViewController {
     private func observerWKWebViewProgress() {
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
-            options: [],
-            changeHandler: { [weak self] _, _ in
-                guard let self = self else { return }
-                self.updateProgress()
-            })
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
     }
     
     private func loadAuthView() {

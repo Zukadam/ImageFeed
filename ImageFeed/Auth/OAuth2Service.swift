@@ -85,7 +85,6 @@ final class OAuth2Service {
         
         let request = builder.makeHTTPRequest(path: url, httpMethod: "POST", baseURLString: Constants.defaultBaseURLString)
         
-        print("Request for makeOAuthTokenRequest method \(String(describing: request))")
         return request
     }
 }

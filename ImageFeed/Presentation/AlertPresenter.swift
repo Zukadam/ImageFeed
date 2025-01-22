@@ -18,14 +18,6 @@ class AlertPresenter: AlertPresenterProtocol {
             model.completion()
         }
         alertController.addAction(alertAction)
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
-            while let presentedViewController = topController.presentedViewController {
-                topController = presentedViewController
-            }
-            topController.present(alertController, animated: true, completion: nil)
-        } else {
-            vc.present(alertController, animated: true, completion: nil)
-        }
         vc.present(alertController, animated: true, completion: nil)
     }
 }

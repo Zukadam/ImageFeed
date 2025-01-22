@@ -52,12 +52,7 @@ extension URLSession {
             switch result {
             case .success(let data):
                 do {
-                    let decoder: JSONDecoder = {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        return decoder
-                    }()
-                    
+                    let decoder = SnakeCaseJSONDecoder()
                     let result = try decoder.decode(T.self, from: data)
                     fulfillCompletionOnTheMainThread(.success(result))
                 } catch {
