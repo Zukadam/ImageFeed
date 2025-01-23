@@ -1,48 +1,70 @@
 import Foundation
 
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
 final class OAuth2Service {
-    // MARK: - Public Properties 
+    // MARK: - Public Properties
     static let shared = OAuth2Service()
+    var isAuthenticated: Bool {
+        storage.token != nil
+    }
     
     // MARK: - Private Properties
     private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-    }()
+    private let builder = URLRequestBuilder.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
     // MARK: - Initialisers
     private init() {}
     
     // MARK: - Public Methods
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let request: URLRequest = makeOAuthTokenRequest(code: code) else { return }
-        
-        let task = urlSession.data(for: request) { [weak self] result in
-            guard let self else { return }
-            
-            switch result {
-            case .success(let data):
-                do {
-                    let responseBody = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    print(responseBody)
-                    print(responseBody.accessToken)
-                    self.storage.token = responseBody.accessToken
-                    completion(.success(responseBody.accessToken))
-                } catch {
-                    completion(.failure(error))
-                }
-            case .failure(let error):
-                completion(.failure(error))
+        assert(Thread.isMainThread, "Not in Main tread")
+        if task != nil {
+            if lastCode != code {
+                task?.cancel()
+            } else {
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+        } else {
+            if lastCode == code {
+                completion(.failure(AuthServiceError.invalidRequest))
+                return
             }
         }
+        lastCode = code
+        
+        guard let request: URLRequest = makeOAuthTokenRequest(code: code) else {
+            completion(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        
+        let task = urlSession.objectTask(for: request) {
+            [weak self] (response: Result<OAuthTokenResponseBody, Error>) in
+            guard let self else { return }
+            switch response {
+            case .success(let responseBody):
+                let authToken = responseBody.accessToken
+                completion(.success(authToken))
+            case .failure(let error):
+                print("OAuth2Service Error in \(#function): error = \(error)")
+                completion(.failure(error))
+            }
+            self.task = nil
+            self.lastCode = nil
+        }
+        self.task = task
         task.resume()
     }
     
     func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: Constants.unsplashGetTokenURLString) else {
-            print("Логирование ошибки")
+            print("Failed construct URL in \(#function)")
             return nil
         }
         
@@ -54,15 +76,13 @@ final class OAuth2Service {
             URLQueryItem(name: "grant_type", value: Constants.grantType)
         ]
         
-        guard let url = urlComponents.url else {
-            print("Логирование ошибки")
+        guard let url = urlComponents.url?.absoluteString else {
+            print("Failed construct URL in \(#function)")
+            assertionFailure("Failed to create URL")
             return nil
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        print("Request for makeOAuthTokenRequest method \(request)")
+        let request = builder.makeHTTPRequest(path: url, httpMethod: "POST", baseURLString: Constants.defaultBaseURLString)
         
         return request
     }

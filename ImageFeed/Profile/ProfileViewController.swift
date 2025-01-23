@@ -1,8 +1,13 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "avatar")
@@ -46,6 +51,17 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         drawSelf()
         setupView()
+        updateProfileDetails()
+        
+        if let url = profileImageService.avatarURL {
+            updateAvatar(url: url)
+        }
+        
+        addProfileImageObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // MARK: - Private Methods
@@ -110,13 +126,55 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
-        self.nameLabel.text = "Екатерина Новикова"
         self.nameLabel.textColor = .ypWhiteIOS
-        
-        self.loginNameLabel.text = "@ekaterina_nov"
         self.loginNameLabel.textColor = .ypGrayIOS
-        
-        self.descriptionLabel.text = "Hello, World!"
         self.descriptionLabel.textColor = .ypWhiteIOS
+    }
+    
+    private func updateProfileDetails() {
+        guard let profile = profileService.profile else { return }
+        
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+        
+        profileImageService.fetchProfileImageURL(with: profile.username) { _ in
+        }
+    }
+    
+    private func addProfileImageObserver() {
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: Constants.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] notification in
+                guard let self else { return }
+                self.updateAvatar(notification: notification)
+            }
+    }
+    
+    @objc
+    private func updateAvatar(notification: Notification) {
+        guard
+            isViewLoaded,
+            let profileImageURL = notification.userInfoImageURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        updateAvatar(url: url)
+    }
+    
+    private func updateAvatar(url: URL) {
+        avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 61, backgroundColor: .ypBackgroundIOS)
+        avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
+}
+
+extension Notification {
+    static let userInfoImageURLKey: String = "URL"
+    var userInfoImageURL: String? {
+        userInfo?[Notification.userInfoImageURLKey] as? String
     }
 }
