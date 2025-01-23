@@ -56,12 +56,14 @@ final class SplashViewController: UIViewController {
     private func authenticate() {
         guard !authenticateStatus else { return }
         authenticateStatus = true
+        
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in
                 guard let self else { return }
                 UIBlockingProgressHUD.dismiss()
-                self.switchToTabBarController()}
+                self.switchToTabBarController()
+            }
         } else {
             showAuthController()
         }
@@ -102,14 +104,17 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self else { return }
             
             switch result {
-            case .success:
-                self.fetchProfile { UIBlockingProgressHUD.dismiss() }
+            case .success(let token):
+                self.storage.token = token
+                self.fetchProfile { [weak self] in
+                    guard let self else { return }
+                    self.switchToTabBarController()
+                    UIBlockingProgressHUD.dismiss()
+                }
             case .failure(let error):
                 print("Fetch token error in \(#function): error = \(error)")
                 UIBlockingProgressHUD.dismiss()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                    self.showLoginAlert()
-                }
+                self.showLoginAlert()
             }
         }
     }
@@ -126,16 +131,16 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .failure(let error):
                 print("Fetch token error in \(#function): error = \(error)")
                 UIBlockingProgressHUD.dismiss()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                    self.showLoginAlert()
-                }
+                self.showLoginAlert()
             }
             completion()
         }
     }
     
     private func fetchProfileImageURL(username: String) {
-        profileImageService.fetchProfileImageURL(with: username) { result in
+        profileImageService.fetchProfileImageURL(with: username) { [weak self] result in
+            guard let self else { return }
+            
             switch result {
             case .success(let imageURL):
                 print("imageURL - \(imageURL)")
@@ -148,13 +153,19 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func showLoginAlert() {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { preconditionFailure("weak self error")}
+            guard let self else {
+                print("weak self error")
+                return
+            }
             let alertModel = AlertModel(
                 title: "Что-то пошло не так(",
                 message: "Не удалось войти в систему",
                 buttonText: "Ок"
             ) { [weak self] in
-                guard let self else { preconditionFailure("weak self error")}
+                guard let self else {
+                    print("weak self error")
+                    return
+                }
                 self.authenticateStatus = false
                 self.authenticate()
             }
