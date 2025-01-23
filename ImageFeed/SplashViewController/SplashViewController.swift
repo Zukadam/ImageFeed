@@ -56,6 +56,7 @@ final class SplashViewController: UIViewController {
     private func authenticate() {
         guard !authenticateStatus else { return }
         authenticateStatus = true
+        
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in
@@ -105,8 +106,11 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success(let token):
                 self.storage.token = token
-                self.switchToTabBarController()
-                self.fetchProfile { UIBlockingProgressHUD.dismiss() }
+                self.fetchProfile { [weak self] in
+                    guard let self else { return }
+                    self.switchToTabBarController()
+                    UIBlockingProgressHUD.dismiss()
+                }
             case .failure(let error):
                 print("Fetch token error in \(#function): error = \(error)")
                 UIBlockingProgressHUD.dismiss()
