@@ -1,9 +1,8 @@
 import UIKit
 
-final class ImagesListService {
-    
+final class ProfileService {
     // MARK: - Public Properties
-    static let shared = ImagesListService()
+    static let shared = ProfileService()
     
     // MARK: - Private Properties
     private(set) var profile: Profile?
@@ -11,41 +10,26 @@ final class ImagesListService {
     private let builder = URLRequestBuilder.shared
     private var lastToken: String?
     private var currentTask: URLSessionTask?
-    private (set) var photos: [Photo] = []
-    private enum ImagesServiceError: Error {
-        case invalidRequest
-    }
-    
-    private var lastLoadedPage: Int?
-    
-    // ...
     
     // MARK: - Initialisers
     private init() {}
     
     // MARK: - Public Methods
-    func fetchPhotosNextPage() {
-        // Здесь получим страницу номер 1, если ещё не загружали ничего,
-        // и следующую страницу (на единицу больше), если есть предыдущая загруженная страница
-//        let nextPage = (lastLoadedPage?.number ?? 0) + 1
-        // ...
-    }
-    
-    func fetchProfile(_ token: String, completion: @escaping (Result<Photo, Error>) -> Void) {
+    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread, "Not in Main tread")
         if currentTask != nil {
             if lastToken != token {
                 currentTask?.cancel()
             } else {
                 if lastToken == token {
-                    completion(.failure(AuthServiceError.invalidRequest))
+                    completion(.failure(NetworkError.raceError))
                 }
             }
             lastToken = token
         }
         
         guard let request: URLRequest = makeProfileRequest() else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.urlRequestError))
             return
         }
         
@@ -68,12 +52,9 @@ final class ImagesListService {
         task.resume()
     }
     
-    func makePhotosRequest() -> URLRequest? {
-        let nextPage = (lastLoadedPage ?? 0) + 1
-        lastLoadedPage = nextPage
-
+    func makeProfileRequest() -> URLRequest? {
         builder.makeHTTPRequest(
-            path: "/photos",
+            path: "/me",
             httpMethod: "GET",
             baseURLString: Constants.defaultBaseAPIURLString
         )

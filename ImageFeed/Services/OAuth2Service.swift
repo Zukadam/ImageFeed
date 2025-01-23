@@ -1,9 +1,5 @@
 import Foundation
 
-enum AuthServiceError: Error {
-    case invalidRequest
-}
-
 final class OAuth2Service {
     // MARK: - Public Properties
     static let shared = OAuth2Service()
@@ -28,19 +24,19 @@ final class OAuth2Service {
             if lastCode != code {
                 task?.cancel()
             } else {
-                completion(.failure(AuthServiceError.invalidRequest))
+                completion(.failure(NetworkError.raceError))
                 return
             }
         } else {
             if lastCode == code {
-                completion(.failure(AuthServiceError.invalidRequest))
+                completion(.failure(NetworkError.raceError))
                 return
             }
         }
         lastCode = code
         
         guard let request: URLRequest = makeOAuthTokenRequest(code: code) else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.urlRequestError))
             return
         }
         
@@ -83,7 +79,6 @@ final class OAuth2Service {
         }
         
         let request = builder.makeHTTPRequest(path: url, httpMethod: "POST", baseURLString: Constants.defaultBaseURLString)
-        
         return request
     }
 }

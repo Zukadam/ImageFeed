@@ -20,7 +20,7 @@ final class ProfileImageService {
         task?.cancel()
         
         guard let request: URLRequest = makeProfileImageRequest(userName: username) else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.urlRequestError))
             return
         }
         

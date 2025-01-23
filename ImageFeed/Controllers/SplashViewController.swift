@@ -1,5 +1,8 @@
 import UIKit
 
+import SwiftKeychainWrapper // Отладочный импорт
+
+
 final class SplashViewController: UIViewController {
     // MARK: - Private Properties
     private let oauth2Service = OAuth2Service.shared
@@ -56,6 +59,8 @@ final class SplashViewController: UIViewController {
     private func authenticate() {
         guard !authenticateStatus else { return }
         authenticateStatus = true
+        
+//        KeychainWrapper.standard.removeObject(forKey: "Auth token")// Отладочное удаление токена
         
         if storage.token != nil {
             UIBlockingProgressHUD.show()

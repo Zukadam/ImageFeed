@@ -9,15 +9,15 @@ struct PhotoResult: Decodable {
     let likedByUser: Bool
     let urls: UrlsResult
     
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case width
-        case height
-        case createdAt = "created_at"
-        case description
-        case likedByUser = "liked_by_user"
-        case urls
-    }
+//    private enum CodingKeys: String, CodingKey {
+//        case id
+//        case width
+//        case height
+//        case createdAt = "created_at"
+//        case description
+//        case likedByUser = "liked_by_user"
+//        case urls
+//    }
 }
 
 

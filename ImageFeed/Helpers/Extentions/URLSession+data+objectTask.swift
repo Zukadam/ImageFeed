@@ -1,12 +1,5 @@
 import Foundation
 
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-    case decodingError(Error)
-}
-
 extension URLSession {
     func data(
         for request: URLRequest,
@@ -28,7 +21,7 @@ extension URLSession {
                 }
             } else if let error = error {
                 print("Network error in \(#function): \(error.localizedDescription)")
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
+                fulfillCompletionOnTheMainThread(.failure(NetworkError.responseError(error)))
             } else {
                 print("Other problems in \(#function)")
                 fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError))
