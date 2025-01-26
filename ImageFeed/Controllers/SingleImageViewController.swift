@@ -15,7 +15,7 @@ final class SingleImageViewController: UIViewController {
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
-    
+        
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
