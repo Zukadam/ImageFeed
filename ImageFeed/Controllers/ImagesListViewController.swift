@@ -60,17 +60,18 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
-    
+    // Вероятно надо изменить configCell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListViewCell.reuseIdentifier, for: indexPath)
         
-        guard let imageListCell = cell as? ImagesListViewCell else {
+        guard let imageListViewCell = cell as? ImagesListViewCell else {
             return UITableViewCell()
         }
         
-        configCell(for: imageListCell, with: indexPath)
+        configCell(for: imageListViewCell, with: indexPath)
+        imageListViewCell.delegate = self
         
-        return imageListCell
+        return imageListViewCell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -101,13 +102,7 @@ extension ImagesListViewController {
     func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath) {
         cell.cellImage.kf.setImage(with: photos[indexPath.row].thumbImageURL)
         cell.dateLabel.text = dateFormatter.string(from: Date())
-        
-        let isLiked = indexPath.row % 2 == 0
-        let likeImage = isLiked ? UIImage(named: "ActiveLikeButton") : UIImage(named: "NonActiveLikeButton")
-        cell.likeButton.setImage(likeImage, for: .normal)
     }
-    
-    
     //    func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath, from data: [Photo]) {
     //        cell.configCell(for: cell, with: indexPath, from: data)
     //        guard let tableView else {return}
@@ -132,6 +127,26 @@ extension ImagesListViewController {
                 completion(imageResult.image)
             case .failure:
                 completion(nil)
+            }
+        }
+    }
+}
+
+extension ImagesListViewController: imageListViewCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] response in
+            guard let self else { return }
+            switch response {
+            case.success(let currentLike):
+                self.photos[indexPath.row].isLiked = currentLike
+                cell.refreshLikeImage(to: currentLike)
+                UIBlockingProgressHUD.dismiss()
+            case.failure(let error):
+                UIBlockingProgressHUD.dismiss()
+                print("Cant refresh like condition \(error)")
             }
         }
     }

@@ -56,7 +56,7 @@ final class ImagesListService {
         task.resume()
     }
 
-    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         likeTask?.cancel()
         
         assert(Thread.isMainThread)
@@ -65,14 +65,14 @@ final class ImagesListService {
             return
         }
         
-        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<PhotoResult, Error>) in
-//        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeModel, Error>) in
+//        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<PhotoResult, Error>) in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeModel, Error>) in
             guard let self else { return }
             switch result {
-//            case .success(let isLikedPhoto):
-            case .success(let response):
-                let currentLike = Photo(from: response).isLiked
-//                let currentLike = isLikedPhoto.photo.likedByUser
+            case .success(let isLikedPhoto):
+//            case .success(let response):
+//                let currentLike = Photo(from: response).isLiked
+                let currentLike = isLikedPhoto.photo.likedByUser
                 if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                     let photo = self.photos[index]
                     let newPhoto = Photo(
@@ -86,7 +86,7 @@ final class ImagesListService {
                     )
                     self.photos[index] = newPhoto
                 }
-                completion(.success(())) // Надо ли возвращать Войд или лучше изменить сигнатуру на ...(Result<Bool, Error>)...
+                completion(.success(currentLike)) // Надо ли возвращать Войд или лучше изменить сигнатуру на ...(Result<Bool, Error>)...
                 NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
             case .failure(let error):
                 print("ImageListService Error in \(#function): error = \(error)")

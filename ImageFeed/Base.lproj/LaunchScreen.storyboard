@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImageLaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="7mP-XY-j8e">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageLaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="7mP-XY-j8e">
                                 <rect key="frame" x="159" y="399.66666666666669" width="75" height="78"/>
                                 <color key="backgroundColor" name="YP Black (iOS)"/>
                             </imageView>
@@ -36,7 +36,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ImageLaunchScreen" width="75" height="78"/>
+        <image name="imageLaunchScreen" width="75" height="78"/>
         <namedColor name="YP Black (iOS)">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

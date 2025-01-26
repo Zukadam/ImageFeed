@@ -18,7 +18,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
-        let buttonImage = UIImage(named: "Exit")
+        let buttonImage = UIImage(named: "exit")
         button.setImage(buttonImage, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

@@ -1,9 +1,5 @@
 import UIKit
 
-protocol AlertPresenterProtocol {
-    static func showAlert(model: AlertModel, vc: UIViewController)
-}
-
 class AlertPresenter: AlertPresenterProtocol {
     // MARK: - Initialisers
     private init() { }

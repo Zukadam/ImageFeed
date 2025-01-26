@@ -1,9 +1,5 @@
 import UIKit
 
-protocol AuthViewControllerDelegate: AnyObject {
-    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
-}
-
 final class AuthViewController: UIViewController {
     // MARK: - Public Properties
     weak var delegate: AuthViewControllerDelegate?
@@ -28,8 +24,8 @@ final class AuthViewController: UIViewController {
     
     // MARK: - Private Methods
     private func configureBackButton() {
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_web_back_button")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_web_back_button")
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "navWebBackButton")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "navWebBackButton")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black (iOS)")
     }
