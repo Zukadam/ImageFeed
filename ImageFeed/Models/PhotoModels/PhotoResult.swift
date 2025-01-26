@@ -8,16 +8,6 @@ struct PhotoResult: Decodable {
     let description: String?
     let likedByUser: Bool
     let urls: UrlsResult
-    
-//    private enum CodingKeys: String, CodingKey {
-//        case id
-//        case width
-//        case height
-//        case createdAt = "created_at"
-//        case description
-//        case likedByUser = "liked_by_user"
-//        case urls
-//    }
 }
 
 

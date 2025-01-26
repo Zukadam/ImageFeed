@@ -7,8 +7,8 @@ final class ProfileImageService {
     // MARK: - Private Properties
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
-    private var task: URLSessionTask?
     private (set) var avatarURL: URL?
+    private var task: URLSessionTask?
     private var currentTask: URLSessionTask?
     
     // MARK: - Initialisers
@@ -48,7 +48,8 @@ final class ProfileImageService {
         task.resume()
     }
     
-    func makeProfileImageRequest(userName: String) -> URLRequest? {
+    // MARK: - Private Methods
+    private func makeProfileImageRequest(userName: String) -> URLRequest? {
         builder.makeHTTPRequest(path: "/users/\(userName)", httpMethod: "GET", baseURLString: Constants.defaultBaseAPIURLString)
     }
 }

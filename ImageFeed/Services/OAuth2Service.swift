@@ -8,8 +8,8 @@ final class OAuth2Service {
     }
     
     // MARK: - Private Properties
-    private let storage = OAuth2TokenStorage.shared
     private let urlSession = URLSession.shared
+    private let storage = OAuth2TokenStorage.shared
     private let builder = URLRequestBuilder.shared
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -58,7 +58,8 @@ final class OAuth2Service {
         task.resume()
     }
     
-    func makeOAuthTokenRequest(code: String) -> URLRequest? {
+    // MARK: - Private Methods
+    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: Constants.unsplashGetTokenURLString) else {
             print("Failed construct URL in \(#function)")
             return nil
