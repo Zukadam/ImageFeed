@@ -30,20 +30,3 @@ final class ImagesListViewCell: UITableViewCell {
         likeButton.setImage(isLike ? UIImage(named: "likeButtonOn") : UIImage(named: "likeButtonOff"), for: .normal)
     }
 }
-
-
-// MARK: - IB Outlets
-
-// MARK: - Public Properties
-
-// MARK: - Private Properties
-
-// MARK: - Initializers
-
-// MARK: - Overrides Methods
-
-// MARK: - IB Actions
-
-// MARK: - Public Methods
-
-// MARK: - Private Methods

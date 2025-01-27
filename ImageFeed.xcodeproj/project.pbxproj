@@ -34,6 +34,7 @@
 		33BD21832D46B96B001663BC /* WebViewViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21822D46B96B001663BC /* WebViewViewControllerDelegate.swift */; };
 		33BD21852D46B9AA001663BC /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21842D46B9AA001663BC /* AlertPresenterProtocol.swift */; };
 		33BD21872D47C869001663BC /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21862D47C869001663BC /* ProfileLogoutService.swift */; };
+		33BD21892D481F22001663BC /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21882D481F22001663BC /* LikeModel.swift */; };
 		33BF73782C87ACD000333EE9 /* ImagesListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF73772C87ACD000333EE9 /* ImagesListViewCell.swift */; };
 		33BF737C2C8855E400333EE9 /* Date+Extensions .swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF737B2C8855E400333EE9 /* Date+Extensions .swift */; };
 		33C8E15D2C957AD0007A86C5 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8E15C2C957AD0007A86C5 /* SingleImageViewController.swift */; };
@@ -80,6 +81,7 @@
 		33BD21822D46B96B001663BC /* WebViewViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerDelegate.swift; sourceTree = "<group>"; };
 		33BD21842D46B9AA001663BC /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
 		33BD21862D47C869001663BC /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
+		33BD21882D481F22001663BC /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		33BF73772C87ACD000333EE9 /* ImagesListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewCell.swift; sourceTree = "<group>"; };
 		33BF737B2C8855E400333EE9 /* Date+Extensions .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions .swift"; sourceTree = "<group>"; };
 		33C8E15C2C957AD0007A86C5 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				33FE65D12D41305A007E17AE /* Photo.swift */,
 				33FE65D42D414EA8007E17AE /* PhotoResult.swift */,
 				33FE65D62D414ED3007E17AE /* UrlsResult.swift */,
+				33BD21882D481F22001663BC /* LikeModel.swift */,
 			);
 			path = PhotoModels;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				33E1532D2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift in Sources */,
 				33BD21852D46B9AA001663BC /* AlertPresenterProtocol.swift in Sources */,
 				330771C32D19FAD400DA8412 /* Profile.swift in Sources */,
+				33BD21892D481F22001663BC /* LikeModel.swift in Sources */,
 				330771C12D0211BE00DA8412 /* ProfileService.swift in Sources */,
 				335318C02D3452E700D7A833 /* ProfileImageService.swift in Sources */,
 				33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */,

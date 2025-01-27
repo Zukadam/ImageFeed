@@ -4,11 +4,12 @@ import Kingfisher
 final class SingleImageViewController: UIViewController {
     
     // MARK: - IB Outlets
-    private var imageView = UIImageView()
-    private var scrollView = UIScrollView()
-    
     @IBOutlet var backButton: UIButton!
     @IBOutlet var shareButton: UIButton!
+    
+    // MARK: - Private Properties
+    private var imageView = UIImageView()
+    private var scrollView = UIScrollView()
     
     // MARK: - Public Properties
     var photo: Photo?
@@ -22,7 +23,6 @@ final class SingleImageViewController: UIViewController {
     }
     
     // MARK: - Overrides Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setScrollView()
@@ -52,7 +52,7 @@ final class SingleImageViewController: UIViewController {
     // MARK: - Private Methods
     private func setScrollView() {
         let scrollView = UIScrollView()
-                
+        
         view.layoutIfNeeded()
         scrollView.delegate = self
         scrollView.minimumZoomScale = 0.1
@@ -70,8 +70,6 @@ final class SingleImageViewController: UIViewController {
         
         self.scrollView = scrollView
     }
-    
-    
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         scrollView.minimumZoomScale = 0.1
@@ -91,8 +89,6 @@ final class SingleImageViewController: UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
-        
-        
     }
     
     private func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
@@ -128,7 +124,7 @@ final class SingleImageViewController: UIViewController {
     private func loadImage(by url: URL) {
         UIBlockingProgressHUD.show()
         imageView = UIImageView()
-        imageView.image = UIImage(named: "0")
+        imageView.image = UIImage(named: "singleImagePlaceholder")
         imageView.frame.size = image?.size ?? CGSize.zero
         imageView.contentMode = .scaleAspectFit
         self.scrollView.addSubview(imageView)

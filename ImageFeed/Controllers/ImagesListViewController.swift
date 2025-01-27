@@ -6,9 +6,10 @@ final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     // MARK: - Private Properties
+    private let isoDateFormatter = ISO8601DateFormatter()
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .long
+        formatter.dateStyle = .medium
         formatter.timeStyle = .none
         return formatter
     }()
@@ -32,17 +33,8 @@ final class ImagesListViewController: UIViewController {
                 assertionFailure("Invalid segue destination")
                 return
             }
-            //            let image = UIImage(named: photos[indexPath.row])
-            //                        viewController.image = image
             let photo = photos[indexPath.row]
             viewController.photo = photo
-//            UIBlockingProgressHUD.show()
-//            guard let singleImage = photo.largeImageURL else { return }
-//            loadImage(from: singleImage) { [weak viewController] image in
-//                guard let viewController else { return }
-//                UIBlockingProgressHUD.dismiss()
-//                viewController.image = image
-//            }
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -63,7 +55,7 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
-    // Вероятно надо изменить configCell
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListViewCell.reuseIdentifier, for: indexPath)
         
@@ -107,10 +99,12 @@ extension ImagesListViewController {
     func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
         let url = photo.thumbImageURL
-        // TODO:
-//        cell.cellImage.kf.setImage(with: <#T##Source?#>, placeholder: <#T##(any Placeholder)?#>)
-        cell.cellImage.kf.setImage(with: url)
-        cell.dateLabel.text = dateFormatter.string(from: Date())
+        cell.cellImage.kf.setImage(with: url, placeholder:UIImage(named: "cellPlaceholder"))
+        if let photoDate = photos[indexPath.row].createdAt, let date = isoDateFormatter.date(from: photoDate) {
+            cell.dateLabel.text = dateFormatter.string(from: date)
+        } else {
+            cell.dateLabel.text = ""
+        }
         cell.likeButton.setImage(photo.isLiked ? UIImage(named: "likeButtonOn") : UIImage(named: "likeButtonOff"), for: .normal)
     }
     

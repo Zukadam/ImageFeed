@@ -1,9 +1,5 @@
 import Foundation
 
-struct LikeModel: Decodable {  // tmp model
-    let photo: PhotoResult
-}
-
 final class ImagesListService {
     // MARK: - Public Properties
     static let shared = ImagesListService()
@@ -70,13 +66,10 @@ final class ImagesListService {
             return
         }
         
-//        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<PhotoResult, Error>) in
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result<LikeModel, Error>) in
             guard let self else { return }
             switch result {
             case .success(let isLikedPhoto):
-//            case .success(let response):
-//                let currentLike = Photo(from: response).isLiked
                 let currentLike = isLikedPhoto.photo.likedByUser
                 if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                     let photo = self.photos[index]
@@ -91,7 +84,7 @@ final class ImagesListService {
                     )
                     self.photos[index] = newPhoto
                 }
-                completion(.success(currentLike)) // Надо ли возвращать Войд или лучше изменить сигнатуру на ...(Result<Bool, Error>)...
+                completion(.success(currentLike))
                 NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
             case .failure(let error):
                 print("ImageListService Error in \(#function): error = \(error)")
