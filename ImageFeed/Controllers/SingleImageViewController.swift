@@ -13,6 +13,10 @@ final class SingleImageViewController: UIViewController {
             imageView.image = image
             imageView.frame.size = image.size
             rescaleAndCenterImageInScrollView(image: image)
+//            guard isViewLoaded, let image else { return }
+//            imageView.kf.indicatorType = .activity
+//            imageView.kf.setImage(with: image.largeImageURL)
+//            imageView.frame.size = image.size
         }
     }
         
@@ -58,8 +62,24 @@ final class SingleImageViewController: UIViewController {
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
+    // start new
+//    private func setImage(for view: UIImageView) {
+//        guard let image else { return }
+//        view.kf.setImage(with: image.largeImageURL) { [weak self] result in
+//            UIBlockingProgressHUD.dismiss()
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let imageResult):
+//                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+//            case .failure:
+//                self.showError()
+//            }
+//        }
+//    }
+    // end new
 }
 
+// MARK: - UIScrollViewDelegate
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView

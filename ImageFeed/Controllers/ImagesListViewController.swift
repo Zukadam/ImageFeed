@@ -38,8 +38,9 @@ final class ImagesListViewController: UIViewController {
             UIBlockingProgressHUD.show()
             guard let singleImage = photo.largeImageURL else { return }
             loadImage(from: singleImage) { [weak viewController] image in
+                guard let viewController else { return }
                 UIBlockingProgressHUD.dismiss()
-                viewController?.image = image
+                viewController.image = image
             }
         } else {
             super.prepare(for: segue, sender: sender)
@@ -56,6 +57,7 @@ final class ImagesListViewController: UIViewController {
 }
 
 // MARK: - Extensions
+// MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
@@ -82,6 +84,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.showSingleImageSegueIdentifier, sender: indexPath)
@@ -98,9 +101,11 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Cell Configuration and Data Loading
 extension ImagesListViewController {
     func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath) {
-        cell.cellImage.kf.setImage(with: photos[indexPath.row].thumbImageURL)
+        let url = photos[indexPath.row].thumbImageURL
+        cell.cellImage.kf.setImage(with: url)
         cell.dateLabel.text = dateFormatter.string(from: Date())
     }
     //    func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath, from data: [Photo]) {
@@ -121,17 +126,49 @@ extension ImagesListViewController {
     
     private func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
         KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            guard self != nil else { return }
+            guard let self else { return }
             switch result {
             case .success(let imageResult):
                 completion(imageResult.image)
             case .failure:
-                completion(nil)
+                break
             }
         }
     }
+    
+//    private func setImage(for view: UIImageView) {
+//        let url = photos[indexPath.row].largeImageURL
+//        view.kf.setImage(with: url) { [weak self] result in
+//            UIBlockingProgressHUD.dismiss()
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let imageResult):
+//                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+//            case .failure:
+//                self.showError()
+//            }
+//        }
+//    }
+    
+    // TODO: - Add alert
+        private func showError() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                let alertModel = AlertModel(
+                    title: "Что-то пошло не так(",
+                    message: "Попробовать ещё раз?",
+                    firstButtonText: "Повторить", secondButtonText: "Не надо"
+                ) { [weak self] in
+                    guard let self else { return }
+                    UIBlockingProgressHUD.show()
+//                    loadImage(from: <#T##URL#>, completion: <#T##(UIImage?) -> Void#>) //??
+                }
+                AlertPresenter.showAlert(model: alertModel, vc: self)
+            }
+        }
 }
 
+// MARK: - ImagesListViewCellDelegate
 extension ImagesListViewController: imageListViewCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }

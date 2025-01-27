@@ -122,7 +122,7 @@ final class ImagesListService {
     
     private func makeLikeRequest(id: String, isLiked: Bool) -> URLRequest? {
         guard
-            var urlComponents = URLComponents(string: Constants.defaultBaseAPIURLString + "/photos/\(id)/like"),
+            let urlComponents = URLComponents(string: Constants.defaultBaseAPIURLString + "/photos/\(id)/like"),
             let url = urlComponents.url?.absoluteString
         else {
             print("Failed construct URL in \(#function)")
