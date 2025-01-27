@@ -35,13 +35,14 @@ final class ImagesListViewController: UIViewController {
             //            let image = UIImage(named: photos[indexPath.row])
             //                        viewController.image = image
             let photo = photos[indexPath.row]
-            UIBlockingProgressHUD.show()
-            guard let singleImage = photo.largeImageURL else { return }
-            loadImage(from: singleImage) { [weak viewController] image in
-                guard let viewController else { return }
-                UIBlockingProgressHUD.dismiss()
-                viewController.image = image
-            }
+            viewController.photo = photo
+//            UIBlockingProgressHUD.show()
+//            guard let singleImage = photo.largeImageURL else { return }
+//            loadImage(from: singleImage) { [weak viewController] image in
+//                guard let viewController else { return }
+//                UIBlockingProgressHUD.dismiss()
+//                viewController.image = image
+//            }
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -104,15 +105,14 @@ extension ImagesListViewController: UITableViewDelegate {
 // MARK: - Cell Configuration and Data Loading
 extension ImagesListViewController {
     func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath) {
-        let url = photos[indexPath.row].thumbImageURL
+        let photo = photos[indexPath.row]
+        let url = photo.thumbImageURL
+        // TODO:
+//        cell.cellImage.kf.setImage(with: <#T##Source?#>, placeholder: <#T##(any Placeholder)?#>)
         cell.cellImage.kf.setImage(with: url)
         cell.dateLabel.text = dateFormatter.string(from: Date())
+        cell.likeButton.setImage(photo.isLiked ? UIImage(named: "likeButtonOn") : UIImage(named: "likeButtonOff"), for: .normal)
     }
-    //    func configCell(for cell: ImagesListViewCell, with indexPath: IndexPath, from data: [Photo]) {
-    //        cell.configCell(for: cell, with: indexPath, from: data)
-    //        guard let tableView else {return}
-    //        tableView.reloadRows(at: [indexPath], with: .automatic)
-    //    }
     
     func onLoadNextPage(result: Result<[PhotoResult], Error>) {
         switch result {
@@ -123,49 +123,6 @@ extension ImagesListViewController {
             NSLog(error.localizedDescription)
         }
     }
-    
-    private func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let imageResult):
-                completion(imageResult.image)
-            case .failure:
-                break
-            }
-        }
-    }
-    
-//    private func setImage(for view: UIImageView) {
-//        let url = photos[indexPath.row].largeImageURL
-//        view.kf.setImage(with: url) { [weak self] result in
-//            UIBlockingProgressHUD.dismiss()
-//            guard let self = self else { return }
-//            switch result {
-//            case .success(let imageResult):
-//                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
-//            case .failure:
-//                self.showError()
-//            }
-//        }
-//    }
-    
-    // TODO: - Add alert
-        private func showError() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                let alertModel = AlertModel(
-                    title: "Что-то пошло не так(",
-                    message: "Попробовать ещё раз?",
-                    firstButtonText: "Повторить", secondButtonText: "Не надо"
-                ) { [weak self] in
-                    guard let self else { return }
-                    UIBlockingProgressHUD.show()
-//                    loadImage(from: <#T##URL#>, completion: <#T##(UIImage?) -> Void#>) //??
-                }
-                AlertPresenter.showAlert(model: alertModel, vc: self)
-            }
-        }
 }
 
 // MARK: - ImagesListViewCellDelegate
