@@ -124,9 +124,9 @@ final class SingleImageViewController: UIViewController {
     private func loadImage(by url: URL) {
         UIBlockingProgressHUD.show()
         imageView = UIImageView()
-        imageView.image = UIImage(named: "singleImagePlaceholder")
         imageView.frame.size = image?.size ?? CGSize.zero
         imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "singleImagePlaceholder")
         self.scrollView.addSubview(imageView)
         loadImage(from: url) { [weak self] image in
             guard let self else { return }
