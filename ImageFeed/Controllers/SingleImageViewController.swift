@@ -7,10 +7,6 @@ final class SingleImageViewController: UIViewController {
     @IBOutlet var backButton: UIButton!
     @IBOutlet var shareButton: UIButton!
     
-    // MARK: - Private Properties
-    private var imageView = UIImageView()
-    private var scrollView = UIScrollView()
-    
     // MARK: - Public Properties
     var photo: Photo?
     var image: UIImage? {
@@ -22,18 +18,18 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Properties
+    private var imageView = UIImageView()
+    private var scrollView = UIScrollView()
+    
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setScrollView()
-        
-        view.bringSubviewToFront(backButton)
-        view.bringSubviewToFront(shareButton)
-        
+        bringButtonsToFront()
         guard let url = photo?.largeImageURL else { return }
         loadImage(by: url)
     }
-    
     
     // MARK: - IB Actions
     @IBAction private func didTapBackButton() {
@@ -133,6 +129,11 @@ final class SingleImageViewController: UIViewController {
             UIBlockingProgressHUD.dismiss()
             self.image = image
         }
+    }
+    
+    private func bringButtonsToFront() {
+        view.bringSubviewToFront(backButton)
+        view.bringSubviewToFront(shareButton)
     }
 }
 

@@ -15,7 +15,7 @@ final class ImagesListService {
     
     // MARK: - Initialisers
     private init() {}
-
+    
     // MARK: - Public Methods
     func clearPhotos() {
         photos.removeAll()
@@ -56,7 +56,7 @@ final class ImagesListService {
         self.dataTask = task
         task.resume()
     }
-
+    
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
         likeTask?.cancel()
         

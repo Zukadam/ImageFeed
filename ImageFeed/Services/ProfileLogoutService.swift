@@ -5,9 +5,8 @@ import SwiftKeychainWrapper
 final class ProfileLogoutService {
     // MARK: - Public Properties
     static let shared = ProfileLogoutService()
-
+    
     // MARK: - Private Properties
-
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let ImageListService = ImagesListService.shared

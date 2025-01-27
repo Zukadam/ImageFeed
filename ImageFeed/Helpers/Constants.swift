@@ -26,5 +26,4 @@ enum Constants {
     static let showLoginFlowSegueIdentifier = "ShowLoginFlow"
     static let showWebViewSegueIdentifier = "ShowWebView"
     static let showSingleImageSegueIdentifier = "ShowSingleImage"
-
 }

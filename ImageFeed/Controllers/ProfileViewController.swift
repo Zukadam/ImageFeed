@@ -52,7 +52,7 @@ final class ProfileViewController: UIViewController {
     private func didTapLogoutButton() {
         showError()
     }
-
+    
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()

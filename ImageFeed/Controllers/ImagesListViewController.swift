@@ -16,7 +16,6 @@ final class ImagesListViewController: UIViewController {
     private let imagesListService: ImagesListService = ImagesListService.shared
     private var photos: [Photo] = []
     private let currentDate = Date()
-    //    private var imagesListServiceObserver: NSObjectProtocol?
     
     // MARK: - Overrides Methods
     override func viewDidLoad() {
@@ -55,7 +54,7 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListViewCell.reuseIdentifier, for: indexPath)
         
