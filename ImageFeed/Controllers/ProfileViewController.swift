@@ -6,6 +6,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private Properties
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    private let profileLogoutService = ProfileLogoutService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
     
     private lazy var avatarImageView: UIImageView = {
@@ -15,11 +16,11 @@ final class ProfileViewController: UIViewController {
         return view
     }()
     
-    
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         let buttonImage = UIImage(named: "exit")
         button.setImage(buttonImage, for: .normal)
+        button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -45,6 +46,14 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Actions
+    @objc
+    private func didTapLogoutButton() {
+        profileLogoutService.logout()
+        switchToSplashViewController()
+    }
+
     
     // MARK: - Overrides Methods
     override func viewDidLoad() {
@@ -169,6 +178,15 @@ final class ProfileViewController: UIViewController {
         avatarImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 61, backgroundColor: .ypBackgroundIOS)
         avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
+    
+    private func switchToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else {
+            print("Error in \(#function): Invalid Configuration")
+            return
+        }
+        window.rootViewController = SplashViewController()
+        window.makeKeyAndVisible()
     }
 }
 

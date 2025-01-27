@@ -15,6 +15,10 @@ final class ProfileImageService {
     private init() {}
     
     // MARK: - Public Methods
+    func clearAvatarURL() {
+        avatarURL = nil
+    }
+    
     func fetchProfileImageURL(with username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread, "Not in Main tread")
         task?.cancel()

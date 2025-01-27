@@ -21,6 +21,11 @@ final class ImagesListService {
     private init() {}
 
     // MARK: - Public Methods
+    func clearPhotos() {
+        photos.removeAll()
+        pageCount = nil
+    }
+    
     func fetchPhotosNextPage(completion: @escaping (Result<[PhotoResult], Error>) -> Void) {
         assert(Thread.isMainThread)
         
