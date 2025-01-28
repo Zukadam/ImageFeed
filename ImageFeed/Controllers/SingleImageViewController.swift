@@ -122,7 +122,7 @@ final class SingleImageViewController: UIViewController {
         imageView = UIImageView()
         imageView.frame.size = image?.size ?? CGSize.zero
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "singleImagePlaceholder")
+        imageView.image = UIImage(named: "singleImagePlaceholder2")
         self.scrollView.addSubview(imageView)
         loadImage(from: url) { [weak self] image in
             guard let self else { return }
