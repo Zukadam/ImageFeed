@@ -119,14 +119,22 @@ final class SingleImageViewController: UIViewController {
     
     private func loadImage(by url: URL) {
         UIBlockingProgressHUD.show()
+        let placeholderImage = UIImage(named: "singleImagePlaceholder")
         imageView = UIImageView()
-        imageView.frame.size = image?.size ?? CGSize.zero
+//        rescaleAndCenterImageInScrollView(image: placeholderImage!)
+        imageView.frame = CGRect(
+            x: (view.frame.width - (placeholderImage?.size.width ?? 0)) * 0.5,
+            y: (view.frame.height - (placeholderImage?.size.height ?? 0)) * 0.5,
+            width: placeholderImage?.size.width ?? 0,
+            height: placeholderImage?.size.height ?? 0
+        )
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "singleImagePlaceholder2")
+        imageView.image = placeholderImage
         self.scrollView.addSubview(imageView)
         loadImage(from: url) { [weak self] image in
             guard let self else { return }
             UIBlockingProgressHUD.dismiss()
+            self.imageView.frame = CGRect.zero
             self.image = image
         }
     }

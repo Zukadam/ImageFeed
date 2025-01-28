@@ -16,11 +16,12 @@ final class ImagesListViewController: UIViewController {
     private let imagesListService: ImagesListService = ImagesListService.shared
     private var photos: [Photo] = []
     private let currentDate = Date()
-    
+    private var imagesListServiceObserver: NSObjectProtocol? = nil
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
+        addImagesListServiceObserver()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -42,8 +43,36 @@ final class ImagesListViewController: UIViewController {
     // MARK: - Private Methods
     private func setTableView() {
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        imagesListService.fetchPhotosNextPage { [weak self] result in
-            self?.onLoadNextPage(result: result)
+        imagesListService.fetchPhotosNextPage { _ in }
+    }
+    
+    private func addImagesListServiceObserver() {
+        imagesListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.didChangeNotification,
+                object: nil,
+                queue: .main,
+                using: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.updateTableViewAnimated()
+                }
+            )
+    }
+    
+    private func updateTableViewAnimated() {
+        guard let tableView else {
+            preconditionFailure("table view doesn't exist")
+        }
+        let oldCount = photos.count
+        let newCount = imagesListService.photos.count
+        photos = imagesListService.photos
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
         }
     }
 }
@@ -70,9 +99,7 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard indexPath.row == photos.count - 1 else { return }
-        imagesListService.fetchPhotosNextPage { [weak self] result in
-            self?.onLoadNextPage(result: result)
-        }
+        imagesListService.fetchPhotosNextPage { _ in }
     }
 }
 
@@ -105,16 +132,8 @@ extension ImagesListViewController {
             cell.dateLabel.text = ""
         }
         cell.likeButton.setImage(photo.isLiked ? UIImage(named: "likeButtonOn") : UIImage(named: "likeButtonOff"), for: .normal)
-    }
-    
-    func onLoadNextPage(result: Result<[PhotoResult], Error>) {
-        switch result {
-        case .success(let newPhotos):
-            photos += newPhotos.map { Photo(from: $0) }
-            tableView.reloadData()
-        case let .failure(error):
-            NSLog(error.localizedDescription)
-        }
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 
