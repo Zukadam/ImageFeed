@@ -110,7 +110,6 @@ final class ImagesListService {
         
         guard let url = urlComponents.url?.absoluteString else {
             print("Failed construct URL in \(#function)")
-            assertionFailure("Failed to create URL")
             return nil
         }
         
