@@ -14,7 +14,7 @@ final class OAuth2Service {
     private var task: URLSessionTask?
     private var lastCode: String?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods

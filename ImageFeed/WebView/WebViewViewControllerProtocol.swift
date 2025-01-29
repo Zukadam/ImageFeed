@@ -1,19 +1,10 @@
 import Foundation
 
-
-
-// MARK: - IB Outlets
-
-// MARK: - Public Properties
-
-// MARK: - Private Properties
-
-// MARK: - Initializers
-
-// MARK: - Overrides Methods
-
-// MARK: - IB Actions
-
-// MARK: - Public Methods
-
-// MARK: - Private Methods
+public protocol WebViewViewControllerProtocol: AnyObject {
+    // MARK: - Public properties
+    var presenter: WebViewPresenterProtocol? { get set }
+    // MARK: - Public methods
+    func load(request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
+}

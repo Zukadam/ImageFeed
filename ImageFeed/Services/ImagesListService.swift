@@ -13,7 +13,7 @@ final class ImagesListService {
     private(set) var photos: [Photo] = []
     private var pageCount: Int?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods

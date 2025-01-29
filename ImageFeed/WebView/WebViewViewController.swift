@@ -1,13 +1,6 @@
 import UIKit
 import WebKit
 
-public protocol WebViewViewControllerProtocol: AnyObject {
-    var presenter: WebViewPresenterProtocol? { get set }
-    func load(request: URLRequest)
-    func setProgressValue(_ newValue: Float)
-    func setProgressHidden(_ isHidden: Bool)
-}
-
 final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     // MARK: - IB Outlets
     @IBOutlet private var webView: WKWebView!
@@ -26,7 +19,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
         webView.navigationDelegate = self
         presenter?.loadAuthView()
         presenter?.didUpdateProgressValue(webView.estimatedProgress)
-//        observerWKWebViewProgress()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,16 +57,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
-    
-//    private func observerWKWebViewProgress() {
-//        estimatedProgressObservation = webView.observe(
-//            \.estimatedProgress,
-//             options: [],
-//             changeHandler: { [weak self] _, _ in
-//                 guard let self = self else { return }
-//                 self.updateProgress()
-//             })
-//    }
 
 }
 

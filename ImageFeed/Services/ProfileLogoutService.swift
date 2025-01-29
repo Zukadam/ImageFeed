@@ -11,7 +11,7 @@ final class ProfileLogoutService {
     private let profileImageService = ProfileImageService.shared
     private let ImageListService = ImagesListService.shared
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods

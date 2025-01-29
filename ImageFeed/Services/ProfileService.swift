@@ -11,7 +11,7 @@ final class ProfileService {
     private var lastToken: String?
     private var currentTask: URLSessionTask?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods

@@ -1,7 +1,7 @@
 import UIKit
 
 final class AlertPresenter: AlertPresenterProtocol {
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() { }
     // MARK: - Public Methods
     static func showAlert(model: AlertModel, vc: UIViewController) {

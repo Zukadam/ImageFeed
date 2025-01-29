@@ -11,7 +11,7 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     private var currentTask: URLSessionTask?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods

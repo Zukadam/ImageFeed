@@ -8,7 +8,7 @@ struct Profile {
     let bio: String?
 }
 
-// MARK: - Initialiser Extension
+// MARK: - Initializers Extension
 extension Profile {
     init(result profile: ProfileResult) {
         self.init(
