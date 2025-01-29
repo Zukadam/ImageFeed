@@ -5,9 +5,9 @@ final class ProfileService {
     static let shared = ProfileService()
     
     // MARK: - Private Properties
-    private(set) var profile: Profile?
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
+    private(set) var profile: Profile?
     private var lastToken: String?
     private var currentTask: URLSessionTask?
     
@@ -22,14 +22,14 @@ final class ProfileService {
                 currentTask?.cancel()
             } else {
                 if lastToken == token {
-                    completion(.failure(AuthServiceError.invalidRequest))
+                    completion(.failure(NetworkError.raceError))
                 }
             }
             lastToken = token
         }
         
         guard let request: URLRequest = makeProfileRequest() else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.urlRequestError))
             return
         }
         
@@ -52,7 +52,8 @@ final class ProfileService {
         task.resume()
     }
     
-    func makeProfileRequest() -> URLRequest? {
+    // MARK: - Private Methods
+    private func makeProfileRequest() -> URLRequest? {
         builder.makeHTTPRequest(
             path: "/me",
             httpMethod: "GET",

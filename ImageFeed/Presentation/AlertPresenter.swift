@@ -1,10 +1,6 @@
 import UIKit
 
-protocol AlertPresenterProtocol {
-    static func showAlert(model: AlertModel, vc: UIViewController)
-}
-
-class AlertPresenter: AlertPresenterProtocol {
+final class AlertPresenter: AlertPresenterProtocol {
     // MARK: - Initialisers
     private init() { }
     // MARK: - Public Methods
@@ -14,10 +10,19 @@ class AlertPresenter: AlertPresenterProtocol {
             message: model.message,
             preferredStyle: .alert
         )
-        let alertAction = UIAlertAction(title: model.buttonText, style: .default) { _ in
+        
+        let alertFirstAction = UIAlertAction(title: model.firstButtonText, style: .default) { _ in
             model.completion()
         }
-        alertController.addAction(alertAction)
+        alertController.addAction(alertFirstAction)
+        
+        if model.secondButtonText != nil {
+            let alertSecondAction = UIAlertAction(title: model.secondButtonText, style: .default) { _ in
+                vc.dismiss(animated: true)
+            }
+            alertController.addAction(alertSecondAction)
+        }
+        
         vc.present(alertController, animated: true, completion: nil)
     }
 }

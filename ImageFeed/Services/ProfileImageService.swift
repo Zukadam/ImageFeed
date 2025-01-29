@@ -7,20 +7,24 @@ final class ProfileImageService {
     // MARK: - Private Properties
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
+    private(set) var avatarURL: URL?
     private var task: URLSessionTask?
-    private (set) var avatarURL: URL?
     private var currentTask: URLSessionTask?
     
     // MARK: - Initialisers
     private init() {}
     
     // MARK: - Public Methods
+    func clearAvatarURL() {
+        avatarURL = nil
+    }
+    
     func fetchProfileImageURL(with username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread, "Not in Main tread")
         task?.cancel()
         
         guard let request: URLRequest = makeProfileImageRequest(userName: username) else {
-            completion(.failure(AuthServiceError.invalidRequest))
+            completion(.failure(NetworkError.urlRequestError))
             return
         }
         
@@ -48,7 +52,8 @@ final class ProfileImageService {
         task.resume()
     }
     
-    func makeProfileImageRequest(userName: String) -> URLRequest? {
+    // MARK: - Private Methods
+    private func makeProfileImageRequest(userName: String) -> URLRequest? {
         builder.makeHTTPRequest(path: "/users/\(userName)", httpMethod: "GET", baseURLString: Constants.defaultBaseAPIURLString)
     }
 }

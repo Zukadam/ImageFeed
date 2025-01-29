@@ -56,7 +56,6 @@ final class SplashViewController: UIViewController {
     private func authenticate() {
         guard !authenticateStatus else { return }
         authenticateStatus = true
-        
         if storage.token != nil {
             UIBlockingProgressHUD.show()
             fetchProfile { [weak self] in
@@ -88,6 +87,7 @@ final class SplashViewController: UIViewController {
     }
 }
 
+// MARK: - AuthViewControllerDelegate
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
@@ -160,7 +160,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             let alertModel = AlertModel(
                 title: "Что-то пошло не так(",
                 message: "Не удалось войти в систему",
-                buttonText: "Ок"
+                firstButtonText: "Ок",
+                secondButtonText: nil
             ) { [weak self] in
                 guard let self else {
                     print("weak self error")
