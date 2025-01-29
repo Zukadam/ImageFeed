@@ -35,6 +35,9 @@
 		33BD21852D46B9AA001663BC /* AlertPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21842D46B9AA001663BC /* AlertPresenterProtocol.swift */; };
 		33BD21872D47C869001663BC /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21862D47C869001663BC /* ProfileLogoutService.swift */; };
 		33BD21892D481F22001663BC /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21882D481F22001663BC /* LikeModel.swift */; };
+		33BD218C2D4A3F6E001663BC /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD218B2D4A3F6E001663BC /* WebViewPresenter.swift */; };
+		33BD218F2D4A40F6001663BC /* WebViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD218E2D4A40F6001663BC /* WebViewPresenterProtocol.swift */; };
+		33BD21912D4A4173001663BC /* WebViewViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BD21902D4A4173001663BC /* WebViewViewControllerProtocol.swift */; };
 		33BF73782C87ACD000333EE9 /* ImagesListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF73772C87ACD000333EE9 /* ImagesListViewCell.swift */; };
 		33BF737C2C8855E400333EE9 /* Date+Extensions .swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BF737B2C8855E400333EE9 /* Date+Extensions .swift */; };
 		33C8E15D2C957AD0007A86C5 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C8E15C2C957AD0007A86C5 /* SingleImageViewController.swift */; };
@@ -82,6 +85,9 @@
 		33BD21842D46B9AA001663BC /* AlertPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterProtocol.swift; sourceTree = "<group>"; };
 		33BD21862D47C869001663BC /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		33BD21882D481F22001663BC /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
+		33BD218B2D4A3F6E001663BC /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		33BD218E2D4A40F6001663BC /* WebViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenterProtocol.swift; sourceTree = "<group>"; };
+		33BD21902D4A4173001663BC /* WebViewViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerProtocol.swift; sourceTree = "<group>"; };
 		33BF73772C87ACD000333EE9 /* ImagesListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewCell.swift; sourceTree = "<group>"; };
 		33BF737B2C8855E400333EE9 /* Date+Extensions .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions .swift"; sourceTree = "<group>"; };
 		33C8E15C2C957AD0007A86C5 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		33186DF02C81B4C30037D5E0 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				33BD218A2D49DC99001663BC /* WebView */,
 				332696962D429E4D00A7C1FB /* Controllers */,
 				33BD217D2D46B878001663BC /* Protocols */,
 				332696972D429EB500A7C1FB /* Services */,
@@ -162,13 +169,12 @@
 		332696962D429E4D00A7C1FB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				33E153222CA584FB00016AD6 /* AuthViewController.swift */,
 				33E153322CDB610900016AD6 /* SplashViewController.swift */,
 				33C8E15C2C957AD0007A86C5 /* SingleImageViewController.swift */,
 				33186DF52C81B4C30037D5E0 /* ImagesListViewController.swift */,
 				33BF73772C87ACD000333EE9 /* ImagesListViewCell.swift */,
 				334A88252D3DAADE008F009C /* TabBarController.swift */,
-				33E153222CA584FB00016AD6 /* AuthViewController.swift */,
-				33E153242CA5A3DE00016AD6 /* WebViewViewController.swift */,
 				333634E12C9054D00020A641 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
@@ -212,6 +218,25 @@
 				33BD21842D46B9AA001663BC /* AlertPresenterProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		33BD218A2D49DC99001663BC /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				33BD218D2D4A40DC001663BC /* WebViewPresenter */,
+				33BD21902D4A4173001663BC /* WebViewViewControllerProtocol.swift */,
+				33E153242CA5A3DE00016AD6 /* WebViewViewController.swift */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		33BD218D2D4A40DC001663BC /* WebViewPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				33BD218E2D4A40F6001663BC /* WebViewPresenterProtocol.swift */,
+				33BD218B2D4A3F6E001663BC /* WebViewPresenter.swift */,
+			);
+			path = WebViewPresenter;
 			sourceTree = "<group>";
 		};
 		33BF737A2C88558D00333EE9 /* Helpers */ = {
@@ -344,6 +369,8 @@
 				33E153272CAD782F00016AD6 /* OAuth2Service.swift in Sources */,
 				33BD21872D47C869001663BC /* ProfileLogoutService.swift in Sources */,
 				335318C22D3571E100D7A833 /* UserResult.swift in Sources */,
+				33BD21912D4A4173001663BC /* WebViewViewControllerProtocol.swift in Sources */,
+				33BD218C2D4A3F6E001663BC /* WebViewPresenter.swift in Sources */,
 				33E1532D2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift in Sources */,
 				33BD21852D46B9AA001663BC /* AlertPresenterProtocol.swift in Sources */,
 				330771C32D19FAD400DA8412 /* Profile.swift in Sources */,
@@ -366,6 +393,7 @@
 				33186DF42C81B4C30037D5E0 /* SceneDelegate.swift in Sources */,
 				33FE65D02D413025007E17AE /* ImagesListService.swift in Sources */,
 				33BD217F2D46B8B5001663BC /* imageListViewCellDelegate.swift in Sources */,
+				33BD218F2D4A40F6001663BC /* WebViewPresenterProtocol.swift in Sources */,
 				33E153232CA584FB00016AD6 /* AuthViewController.swift in Sources */,
 				33E153202CA4648200016AD6 /* Constants.swift in Sources */,
 				33FE65D22D41305A007E17AE /* Photo.swift in Sources */,
