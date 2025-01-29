@@ -50,7 +50,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func didTapLogoutButton() {
-        showError()
+        showLogoutAlert()
     }
     
     // MARK: - Overrides Methods
@@ -133,6 +133,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
+        view.backgroundColor = .ypBlackIOS
         self.nameLabel.textColor = .ypWhiteIOS
         self.loginNameLabel.textColor = .ypGrayIOS
         self.descriptionLabel.textColor = .ypWhiteIOS
@@ -187,7 +188,7 @@ final class ProfileViewController: UIViewController {
         window.makeKeyAndVisible()
     }
     
-    private func showError() {
+    private func showLogoutAlert() {
         let alertModel = AlertModel(
             title: "Пока, пока!",
             message: "Уверены что хотите выйти?",

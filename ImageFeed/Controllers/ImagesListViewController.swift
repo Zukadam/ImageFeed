@@ -8,11 +8,11 @@ final class ImagesListViewController: UIViewController {
     // MARK: - Private Properties
     private let isoDateFormatter = ISO8601DateFormatter()
     private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        return formatter
-    }()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMMM yyyy"
+            formatter.locale = Locale(identifier: "ru_RU")
+            return formatter
+        }()
     private let imagesListService: ImagesListService = ImagesListService.shared
     private var photos: [Photo] = []
     private let currentDate = Date()

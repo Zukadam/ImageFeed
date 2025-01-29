@@ -7,7 +7,7 @@ final class ProfileImageService {
     // MARK: - Private Properties
     private let urlSession = URLSession.shared
     private let builder = URLRequestBuilder.shared
-    private (set) var avatarURL: URL?
+    private(set) var avatarURL: URL?
     private var task: URLSessionTask?
     private var currentTask: URLSessionTask?
     

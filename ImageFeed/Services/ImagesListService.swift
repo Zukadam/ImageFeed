@@ -10,7 +10,7 @@ final class ImagesListService {
     private let builder = URLRequestBuilder.shared
     private var dataTask: URLSessionTask?
     private var likeTask: URLSessionTask?
-    private (set) var photos: [Photo] = []
+    private(set) var photos: [Photo] = []
     private var pageCount: Int?
     
     // MARK: - Initialisers
