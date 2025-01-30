@@ -1,14 +1,6 @@
 import UIKit
 import Kingfisher
 
-public protocol ProfileViewControllerProtocol: AnyObject {
-    var presenter: ProfileViewPresenterProtocol? { get set }
-    func updateProfileDetails(profile: Profile?)
-    func updateAvatar(url: URL)
-    func logoutButtonWasTapped()
-}
-
-
 final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - Public Properties
     var presenter: ProfileViewPresenterProtocol?
@@ -24,6 +16,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         let buttonImage = UIImage(named: "exit")
+        button.accessibilityIdentifier = "logout button"
         button.setImage(buttonImage, for: .normal)
         button.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

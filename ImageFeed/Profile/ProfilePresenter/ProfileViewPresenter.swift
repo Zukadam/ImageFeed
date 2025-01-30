@@ -1,15 +1,5 @@
 import UIKit
 
-public protocol ProfileViewPresenterProtocol {
-    // MARK: - Public Properties
-    var view: ProfileViewControllerProtocol? { get set }
-    // MARK: - Public Methods
-    func loadData()
-    func getProfileImage()
-    func logoutButtonWasTapped()
-    func logout()
-}
-
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     // MARK: - Public Properties
     weak var view: ProfileViewControllerProtocol?
@@ -20,7 +10,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     private let profileLogoutService = ProfileLogoutService.shared
     
     private var profileImageServiceObserver: NSObjectProtocol?
-
+    
     
     // MARK: - Public Methods
     func loadData() {
@@ -38,7 +28,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         profileLogoutService.logout()
         switchToSplashViewController()
     }
- 
+    
     func getProfileImage() {
         guard let profile = profileService.profile else { return }
         profileImageService.fetchProfileImageURL(with: profile.username) { _ in }

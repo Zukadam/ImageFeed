@@ -1,13 +1,16 @@
 import UIKit
 
 final class AuthViewController: UIViewController {
+    // MARK: - IB Outlets
+    @IBOutlet var enterButton: UIButton!
+    
     // MARK: - Public Properties
     weak var delegate: AuthViewControllerDelegate?
     
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBackButton()
+        configureButtons()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,6 +36,15 @@ final class AuthViewController: UIViewController {
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "navWebBackButton")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black (iOS)")
+    }
+    
+    private func configureEnterButton() {
+        enterButton.accessibilityIdentifier = "Authenticate"
+    }
+    
+    private func configureButtons() {
+        configureBackButton()
+        configureEnterButton()
     }
 }
 

@@ -16,6 +16,7 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupWebViewController()
         webView.navigationDelegate = self
         presenter?.loadAuthView()
         presenter?.didUpdateProgressValue(webView.estimatedProgress)
@@ -56,6 +57,11 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
 
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
+    }
+
+    // MARK: - Private Method
+    private func setupWebViewController() {
+        webView.accessibilityIdentifier = "UnsplashWebView"
     }
 
 }
