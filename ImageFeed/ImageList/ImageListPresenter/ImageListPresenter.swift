@@ -1,24 +1,10 @@
 import Foundation
 
-protocol ImagesListViewPresenterProtocol {
-    var view: ImagesListViewControllerProtocol? { get set }
-    var photos: [Photo] { get }
-    func loadData()
-    func fetchPhotosNextPage()
-    func updatePhotos() -> (old: Int, new: Int)
-    func likeButtonWasTapped(by indexPath: IndexPath)
-    
-}
-
-
 class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
-    
-    
     weak var view: ImagesListViewControllerProtocol?
     private(set) var photos: [Photo] = []
     private let imagesListService: ImagesListService = ImagesListService.shared
     private var imagesListServiceObserver: NSObjectProtocol?
-    
     
     func loadData() {
         addImagesListServiceObserver()
@@ -68,6 +54,4 @@ extension ImagesListViewPresenter {
                 }
             )
     }
-    
-    
 }

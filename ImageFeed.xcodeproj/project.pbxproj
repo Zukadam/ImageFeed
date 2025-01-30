@@ -59,6 +59,8 @@
 		33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */; };
 		33E153332CDB610900016AD6 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E153322CDB610900016AD6 /* SplashViewController.swift */; };
 		33E153362CE908D800016AD6 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 33E153352CE908D800016AD6 /* ProgressHUD */; };
+		33E6004D2D4C18250087932A /* ImagesListViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E6004C2D4C18250087932A /* ImagesListViewPresenterProtocol.swift */; };
+		33E6004F2D4C18A30087932A /* ImagesListViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E6004E2D4C18A30087932A /* ImagesListViewControllerProtocol.swift */; };
 		33FE41A82D4C035100431CC5 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE41A72D4C035100431CC5 /* Notification+.swift */; };
 		33FE41AC2D4C055D00431CC5 /* ImageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE41AB2D4C055D00431CC5 /* ImageListPresenter.swift */; };
 		33FE65D02D413025007E17AE /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE65CF2D413025007E17AE /* ImagesListService.swift */; };
@@ -130,6 +132,8 @@
 		33E1532C2CCFDB1200016AD6 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		33E1532E2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		33E153322CDB610900016AD6 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		33E6004C2D4C18250087932A /* ImagesListViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewPresenterProtocol.swift; sourceTree = "<group>"; };
+		33E6004E2D4C18A30087932A /* ImagesListViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewControllerProtocol.swift; sourceTree = "<group>"; };
 		33FE41A72D4C035100431CC5 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		33FE41AB2D4C055D00431CC5 /* ImageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenter.swift; sourceTree = "<group>"; };
 		33FE65CF2D413025007E17AE /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				33FE41AA2D4C053300431CC5 /* ImageListPresenter */,
+				33E6004E2D4C18A30087932A /* ImagesListViewControllerProtocol.swift */,
 				33186DF52C81B4C30037D5E0 /* ImagesListViewController.swift */,
 				33BD217E2D46B8B5001663BC /* imageListViewCellDelegate.swift */,
 			);
@@ -367,6 +372,7 @@
 		33FE41AA2D4C053300431CC5 /* ImageListPresenter */ = {
 			isa = PBXGroup;
 			children = (
+				33E6004C2D4C18250087932A /* ImagesListViewPresenterProtocol.swift */,
 				33FE41AB2D4C055D00431CC5 /* ImageListPresenter.swift */,
 			);
 			path = ImageListPresenter;
@@ -516,7 +522,9 @@
 				330771C32D19FAD400DA8412 /* Profile.swift in Sources */,
 				33BD21892D481F22001663BC /* LikeModel.swift in Sources */,
 				334685DE2D4BE0E600CECEB6 /* ProfileViewControllerProtocol.swift in Sources */,
+				33E6004F2D4C18A30087932A /* ImagesListViewControllerProtocol.swift in Sources */,
 				330771C12D0211BE00DA8412 /* ProfileService.swift in Sources */,
+				33E6004D2D4C18250087932A /* ImagesListViewPresenterProtocol.swift in Sources */,
 				335318C02D3452E700D7A833 /* ProfileImageService.swift in Sources */,
 				33E1532F2CCFDB4E00016AD6 /* OAuth2TokenStorage.swift in Sources */,
 				335318C82D37F0F200D7A833 /* AlertPresenter.swift in Sources */,

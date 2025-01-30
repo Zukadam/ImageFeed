@@ -1,12 +1,6 @@
 import UIKit
 import Kingfisher
 
-protocol ImagesListViewControllerProtocol: AnyObject {
-    var presenter: ImagesListViewPresenterProtocol? { get set }
-    func updateTableViewWithAnimation()
-    func updateLikeButton(for indexPath: IndexPath, with isLiked: Bool)
-}
-
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
     var presenter: ImagesListViewPresenterProtocol?
     
@@ -16,11 +10,11 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     // MARK: - Private Properties
     private let isoDateFormatter = ISO8601DateFormatter()
     private lazy var dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMMM yyyy"
-            formatter.locale = Locale(identifier: "ru_RU")
-            return formatter
-        }()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM yyyy"
+        formatter.locale = Locale(identifier: "ru_RU")
+        return formatter
+    }()
     private let currentDate = Date()
     // MARK: - Overrides Methods
     override func viewDidLoad() {
@@ -46,11 +40,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         }
     }
     
-    // MARK: - Private Methods
-    private func setTableView() {
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-    }
-
+    // MARK: - Public Methods
     func updateTableViewWithAnimation() {
         guard let tableView else {
             preconditionFailure("table view doesn't exist")
@@ -71,7 +61,11 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListViewCell else { return }
         cell.refreshLikeImage(to: isLiked)
     }
-
+    
+    // MARK: - Private Methods
+    private func setTableView() {
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
 }
 
 // MARK: - Extensions
