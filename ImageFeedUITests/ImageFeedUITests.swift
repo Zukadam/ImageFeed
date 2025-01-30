@@ -3,8 +3,8 @@ import XCTest
 class Image_FeedUITests: XCTestCase {
     
     private enum PersonalData {
-        static let email = "poisontermit@rambler.ru"
-        static let password = "12345678"
+        static let email = ""
+        static let password = ""
         static let fullName = ""
         static let login = "@"
     }
@@ -17,7 +17,6 @@ class Image_FeedUITests: XCTestCase {
     }
     
     func testAuth() throws {
-        // тестируем сценарий авторизации
         app.buttons["Authenticate"].tap()
         
         let webView = app.webViews["UnsplashWebView"]
