@@ -1,14 +1,19 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
-    
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateProfileDetails(profile: Profile?)
+    func updateAvatar(url: URL)
+    func logoutButtonWasTapped()
+}
+
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    //MARK: - Public Properties
+    var presenter: ProfileViewPresenterProtocol?
+
     // MARK: - Private Properties
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    private let profileLogoutService = ProfileLogoutService.shared
-    private var profileImageServiceObserver: NSObjectProtocol?
-    
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "avatar")
@@ -50,7 +55,7 @@ final class ProfileViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func didTapLogoutButton() {
-        showLogoutAlert()
+        presenter?.logoutButtonWasTapped()
     }
     
     // MARK: - Overrides Methods
@@ -58,13 +63,8 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         drawSelf()
         setupView()
-        updateProfileDetails()
         
-        if let url = profileImageService.avatarURL {
-            updateAvatar(url: url)
-        }
-        
-        addProfileImageObserver()
+        presenter?.loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,72 +139,34 @@ final class ProfileViewController: UIViewController {
         self.descriptionLabel.textColor = .ypWhiteIOS
     }
     
-    private func updateProfileDetails() {
-        guard let profile = profileService.profile else { return }
+    func updateProfileDetails(profile: Profile?) {
+        guard let profile else {
+            print("Error in \(#function): profile is nil")
+            return
+        }
         
         nameLabel.text = profile.name
         loginNameLabel.text = profile.loginName
         descriptionLabel.text = profile.bio
         
-        profileImageService.fetchProfileImageURL(with: profile.username) { _ in
-        }
+        presenter?.getProfileImage()
     }
     
-    private func addProfileImageObserver() {
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: Constants.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] notification in
-                guard let self else { return }
-                self.updateAvatar(notification: notification)
-            }
-    }
-    
-    @objc
-    private func updateAvatar(notification: Notification) {
-        guard
-            isViewLoaded,
-            let profileImageURL = notification.userInfoImageURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        
-        updateAvatar(url: url)
-    }
-    
-    private func updateAvatar(url: URL) {
+    func updateAvatar(url: URL) {
         avatarImageView.kf.indicatorType = .activity
         let processor = RoundCornerImageProcessor(cornerRadius: 61, backgroundColor: .ypBackgroundIOS)
         avatarImageView.kf.setImage(with: url, options: [.processor(processor)])
     }
     
-    private func switchToSplashViewController() {
-        guard let window = UIApplication.shared.windows.first else {
-            print("Error in \(#function): Invalid Configuration")
-            return
-        }
-        window.rootViewController = SplashViewController()
-        window.makeKeyAndVisible()
-    }
-    
-    private func showLogoutAlert() {
+    func logoutButtonWasTapped() {
         let alertModel = AlertModel(
             title: "Пока, пока!",
             message: "Уверены что хотите выйти?",
             firstButtonText: "Да", secondButtonText: "Нет"
         ) { [weak self] in
             guard let self else { return }
-            self.profileLogoutService.logout()
-            self.switchToSplashViewController()
+            presenter?.logout()
         }
         AlertPresenter.showAlert(model: alertModel, vc: self)
-    }
-}
-
-extension Notification {
-    static let userInfoImageURLKey: String = "URL"
-    var userInfoImageURL: String? {
-        userInfo?[Notification.userInfoImageURLKey] as? String
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Profile {
+public struct Profile {
     // MARK: - Public Properties
     let username: String
     let name: String
