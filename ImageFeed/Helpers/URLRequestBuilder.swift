@@ -7,7 +7,7 @@ final class URLRequestBuilder {
     // MARK: - Private Properties
     private let storage: OAuth2TokenStorage
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init(storage: OAuth2TokenStorage = .shared) {
         self.storage = storage
     }

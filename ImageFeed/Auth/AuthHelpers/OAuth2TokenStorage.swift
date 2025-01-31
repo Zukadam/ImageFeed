@@ -22,6 +22,6 @@ final class OAuth2TokenStorage {
     
     static let shared = OAuth2TokenStorage()
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init(){}
 }

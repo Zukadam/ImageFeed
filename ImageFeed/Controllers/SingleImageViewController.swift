@@ -121,7 +121,6 @@ final class SingleImageViewController: UIViewController {
         UIBlockingProgressHUD.show()
         let placeholderImage = UIImage(named: "singleImagePlaceholder")
         imageView = UIImageView()
-//        rescaleAndCenterImageInScrollView(image: placeholderImage!)
         imageView.frame = CGRect(
             x: (view.frame.width - (placeholderImage?.size.width ?? 0)) * 0.5,
             y: (view.frame.height - (placeholderImage?.size.height ?? 0)) * 0.5,
