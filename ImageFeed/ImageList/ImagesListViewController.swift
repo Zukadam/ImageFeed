@@ -2,10 +2,11 @@ import UIKit
 import Kingfisher
 
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
-    var presenter: ImagesListViewPresenterProtocol?
-    
     // MARK: - IB Outlets
     @IBOutlet private var tableView: UITableView!
+    
+    // MARK: - Public Properties
+    var presenter: ImagesListViewPresenterProtocol?
     
     // MARK: - Private Properties
     private let isoDateFormatter = ISO8601DateFormatter()
@@ -60,6 +61,14 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     func updateLikeButton(for indexPath: IndexPath, with isLiked: Bool) {
         guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListViewCell else { return }
         cell.refreshLikeImage(to: isLiked)
+    }
+    
+    func showLoadingIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func hideLoadingIndicator() {
+        UIBlockingProgressHUD.dismiss()
     }
     
     // MARK: - Private Methods

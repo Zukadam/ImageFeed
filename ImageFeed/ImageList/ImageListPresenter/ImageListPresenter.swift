@@ -25,15 +25,15 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     
     func likeButtonWasTapped(by indexPath: IndexPath) {
         let photo = photos[indexPath.row]
-        UIBlockingProgressHUD.show()
+        view?.showLoadingIndicator()
         imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] response in
             guard let self else { return }
-            UIBlockingProgressHUD.dismiss()
+            view?.hideLoadingIndicator()
             switch response {
             case.success(let isLiked):
                 self.photos[indexPath.row].isLiked = isLiked
                 view?.updateLikeButton(for: indexPath, with: isLiked)
-            case.failure(let error):
+            case.failure( _):
                 break
             }
         }

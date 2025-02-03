@@ -114,9 +114,7 @@ final class WebViewPresenterSpy: WebViewPresenterProtocol {
         loadAuthViewCalled = true
     }
     
-    func didUpdateProgressValue(_ newValue: Double) {
-        
-    }
+    func didUpdateProgressValue(_ newValue: Double) {}
     
     func code(from url: URL) -> String? {
         return nil
@@ -131,11 +129,7 @@ final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
         loadRequestCalled = true
     }
     
-    func setProgressValue(_ newValue: Float) {
-        
-    }
+    func setProgressValue(_ newValue: Float) {}
     
-    func setProgressHidden(_ isHidden: Bool) {
-        
-    }
+    func setProgressHidden(_ isHidden: Bool) {}
 }
