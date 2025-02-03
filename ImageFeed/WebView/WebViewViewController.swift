@@ -52,16 +52,15 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     func setProgressValue(_ newValue: Float) {
         progressView.progress = newValue
     }
-
+    
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
     }
-
+    
     // MARK: - Private Method
     private func setupWebViewController() {
         webView.accessibilityIdentifier = "UnsplashWebView"
     }
-
 }
 
 // MARK: - WKNavigationDelegate

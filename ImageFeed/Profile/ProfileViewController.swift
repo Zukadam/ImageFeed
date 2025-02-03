@@ -4,7 +4,7 @@ import Kingfisher
 final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - Public Properties
     var presenter: ProfileViewPresenterProtocol?
-
+    
     // MARK: - Private Properties
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()

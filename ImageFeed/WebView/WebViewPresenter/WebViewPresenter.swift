@@ -4,7 +4,7 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     // MARK: - Public Properties
     weak var view: WebViewViewControllerProtocol?
     private let authHelper: AuthHelperProtocol
-
+    
     // MARK: - Public Methods
     func loadAuthView() {
         guard let request = authHelper.authRequest() else { return }
