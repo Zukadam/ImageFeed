@@ -9,7 +9,7 @@ struct AuthConfiguration {
     let authURLString: String
     
     static var standard: AuthConfiguration {
-        return AuthConfiguration(
+        .init(
             accessKey: Constants.accessKey,
             secretKey: Constants.secretKey,
             redirectURI: Constants.redirectURI,
@@ -19,7 +19,14 @@ struct AuthConfiguration {
         )
     }
     
-    init(accessKey: String, secretKey: String, redirectURI: String, accessScope: String, authURLString: String, defaultBaseURL: URL) {
+    init(
+        accessKey: String,
+        secretKey: String,
+        redirectURI: String,
+        accessScope: String,
+        authURLString: String,
+        defaultBaseURL: URL
+    ) {
         self.accessKey = accessKey
         self.secretKey = secretKey
         self.redirectURI = redirectURI

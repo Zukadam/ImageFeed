@@ -4,7 +4,7 @@ import WebKit
 final class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     // MARK: - IB Outlets
     @IBOutlet private var webView: WKWebView!
-    @IBOutlet var progressView: UIProgressView!
+    @IBOutlet private var progressView: UIProgressView!
     
     // MARK: - Public Properties
     var presenter: WebViewPresenterProtocol?
@@ -24,8 +24,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // NOTE: Since the class is marked as `final` we don't need to pass a context.
-        // In case of inhertiance context must not be nil.
         webView.addObserver(
             self,
             forKeyPath: #keyPath(WKWebView.estimatedProgress),

@@ -1,6 +1,6 @@
 import Foundation
 
-class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
+final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     weak var view: ImagesListViewControllerProtocol?
     private(set) var photos: [Photo] = []
     private let imagesListService: ImagesListService = ImagesListService.shared
@@ -28,14 +28,13 @@ class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
         UIBlockingProgressHUD.show()
         imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self] response in
             guard let self else { return }
+            UIBlockingProgressHUD.dismiss()
             switch response {
             case.success(let isLiked):
                 self.photos[indexPath.row].isLiked = isLiked
                 view?.updateLikeButton(for: indexPath, with: isLiked)
-                UIBlockingProgressHUD.dismiss()
             case.failure(let error):
-                UIBlockingProgressHUD.dismiss()
-                print("Cant refresh like condition \(error)")
+                break
             }
         }
     }

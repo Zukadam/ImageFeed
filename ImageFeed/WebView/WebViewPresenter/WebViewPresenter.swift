@@ -3,8 +3,7 @@ import Foundation
 final class WebViewPresenter: WebViewPresenterProtocol {
     // MARK: - Public Properties
     weak var view: WebViewViewControllerProtocol?
-    var authHelper: AuthHelperProtocol
-
+    private let authHelper: AuthHelperProtocol
 
     // MARK: - Public Methods
     func loadAuthView() {
@@ -33,21 +32,4 @@ final class WebViewPresenter: WebViewPresenterProtocol {
     init(authHelper: AuthHelperProtocol) {
         self.authHelper = authHelper
     }
-
 }
-
-// MARK: - IB Outlets
-
-// MARK: - Public Properties
-
-// MARK: - Private Properties
-
-// MARK: - Initializers
-
-// MARK: - Overrides Methods
-
-// MARK: - IB Actions
-
-// MARK: - Public Methods
-
-// MARK: - Private Methods

@@ -1,10 +1,3 @@
-//
-//  ImageFeedUITestsLaunchTests.swift
-//  ImageFeedUITests
-//
-//  Created by Development on 30.01.2025.
-//
-
 import XCTest
 
 final class ImageFeedUITestsLaunchTests: XCTestCase {

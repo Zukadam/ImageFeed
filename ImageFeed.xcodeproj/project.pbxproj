@@ -62,7 +62,6 @@
 		33E6004D2D4C18250087932A /* ImagesListViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E6004C2D4C18250087932A /* ImagesListViewPresenterProtocol.swift */; };
 		33E6004F2D4C18A30087932A /* ImagesListViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E6004E2D4C18A30087932A /* ImagesListViewControllerProtocol.swift */; };
 		33E600572D4C1C7E0087932A /* ImageFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E600562D4C1C7E0087932A /* ImageFeedUITests.swift */; };
-		33E600592D4C1C7E0087932A /* ImageFeedUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E600582D4C1C7E0087932A /* ImageFeedUITestsLaunchTests.swift */; };
 		33FE41A82D4C035100431CC5 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE41A72D4C035100431CC5 /* Notification+.swift */; };
 		33FE41AC2D4C055D00431CC5 /* ImageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE41AB2D4C055D00431CC5 /* ImageListPresenter.swift */; };
 		33FE65D02D413025007E17AE /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE65CF2D413025007E17AE /* ImagesListService.swift */; };
@@ -145,7 +144,6 @@
 		33E6004E2D4C18A30087932A /* ImagesListViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewControllerProtocol.swift; sourceTree = "<group>"; };
 		33E600542D4C1C7E0087932A /* ImageFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E600562D4C1C7E0087932A /* ImageFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITests.swift; sourceTree = "<group>"; };
-		33E600582D4C1C7E0087932A /* ImageFeedUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		33FE41A72D4C035100431CC5 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		33FE41AB2D4C055D00431CC5 /* ImageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenter.swift; sourceTree = "<group>"; };
 		33FE65CF2D413025007E17AE /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
@@ -350,8 +348,8 @@
 			isa = PBXGroup;
 			children = (
 				33BD21A02D4AB3A7001663BC /* WebViewTests.swift */,
-				33BD21A72D4ACC6D001663BC /* ImagesListViewTests.swift */,
 				33BD21A92D4ACCC3001663BC /* ProfileViewTest.swift */,
+				33BD21A72D4ACC6D001663BC /* ImagesListViewTests.swift */,
 			);
 			path = ImageFeedTests;
 			sourceTree = "<group>";
@@ -382,7 +380,6 @@
 			isa = PBXGroup;
 			children = (
 				33E600562D4C1C7E0087932A /* ImageFeedUITests.swift */,
-				33E600582D4C1C7E0087932A /* ImageFeedUITestsLaunchTests.swift */,
 			);
 			path = ImageFeedUITests;
 			sourceTree = "<group>";
@@ -628,7 +625,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33E600592D4C1C7E0087932A /* ImageFeedUITestsLaunchTests.swift in Sources */,
 				33E600572D4C1C7E0087932A /* ImageFeedUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
