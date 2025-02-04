@@ -11,7 +11,7 @@ final class ProfileImageService {
     private var task: URLSessionTask?
     private var currentTask: URLSessionTask?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods
@@ -36,6 +36,7 @@ final class ProfileImageService {
                 guard let profileImageURL = userResult.profileImage.large else { preconditionFailure("can't get image URL") }
                 self.avatarURL = URL(string: profileImageURL)
                 completion(.success(profileImageURL))
+                
                 NotificationCenter.default
                     .post(
                         name: Constants.didChangeNotification,

@@ -1,8 +1,9 @@
 import UIKit
 
 final class AlertPresenter: AlertPresenterProtocol {
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() { }
+    
     // MARK: - Public Methods
     static func showAlert(model: AlertModel, vc: UIViewController) {
         let alertController = UIAlertController(
@@ -10,6 +11,8 @@ final class AlertPresenter: AlertPresenterProtocol {
             message: model.message,
             preferredStyle: .alert
         )
+        
+        alertController.view.accessibilityIdentifier = "alertController"
         
         let alertFirstAction = UIAlertAction(title: model.firstButtonText, style: .default) { _ in
             model.completion()

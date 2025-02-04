@@ -1,6 +1,6 @@
 import Foundation
 
-struct Profile {
+public struct Profile {
     // MARK: - Public Properties
     let username: String
     let name: String
@@ -8,7 +8,7 @@ struct Profile {
     let bio: String?
 }
 
-// MARK: - Initialiser Extension
+// MARK: - Initializers Extension
 extension Profile {
     init(result profile: ProfileResult) {
         self.init(

@@ -13,7 +13,7 @@ final class ImagesListService {
     private(set) var photos: [Photo] = []
     private var pageCount: Int?
     
-    // MARK: - Initialisers
+    // MARK: - Initializers
     private init() {}
     
     // MARK: - Public Methods
@@ -110,7 +110,6 @@ final class ImagesListService {
         
         guard let url = urlComponents.url?.absoluteString else {
             print("Failed construct URL in \(#function)")
-            assertionFailure("Failed to create URL")
             return nil
         }
         
